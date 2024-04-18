@@ -1,4 +1,4 @@
-var express = requrie('express');
+var express = require('express');
 var db = require('../db/database.js');
 var router = express.Router();
 

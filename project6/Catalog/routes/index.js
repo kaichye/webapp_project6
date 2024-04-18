@@ -13,8 +13,7 @@ router.get('/', function(req, res, next) {
     }
     //Render index.pug page using array
     res.render('index', {catalog: rows});
-  })
-  res.render('index', { title: 'Express' });
+  });
 });
 
 //not going to work yet bc we don't have login.pug
