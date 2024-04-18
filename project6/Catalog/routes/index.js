@@ -4,15 +4,17 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+
   var sql = "SELECT * from catalog";
   db.query(sql, (err, rows) => {
+  
     if(err){
       console.log("SELECT from catalog failed");
       console.log(err);
       return;
     }
     //Render index.pug page using array
-    res.render('index', {catalog: rows});
+    res.render('index', {catalogs: rows});
   });
 });
 
