@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>APE</title>
+        <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,500i,700,900,900i">
+        <script src="js/main.js" defer></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <link href="css/datatables.min.css" rel="stylesheet">
+        <script src="js/dataTables.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+        
+    </head>
+    <body>
+        <header>
+            <div class="heading">
+                <h1>ACADEMIC PLANNING</h1>
+                <div id="info">
+                    <p id="student"></p>
+                    <p id="major"></p>
+                    <p id="catalog_year"></p>
+                    <p id="minor"></p>
+                </div>
+                <div id="buttons">
+                    <button id="logout">Log Out</button>
+                    <button id="options">Options</button>
+                    <button id="save">Save</button>
+                </div>
+            </div>
+        </header>
+        <div id="banner">
+            <p class="banner-element">Requirements</p>
+            <p class="banner-element" id="plan">Academic Plan: CSCY</p>
+            <div id="gpa" class="banner-element">
+                <p>GPA: 3.75</p>
+                <p>Major GPA: 3.64</p>
+                <p id="total_hours"></p>
+            </div>
+        </div>
+        <div id="grid-container">
+            <div id="section1">
+                <div id="requirements_cell">
+                    <div id="requirements"></div>
+                </div>
+            </div>
+            <div id="section2">
+                <div id="bottom-strip">
+                    <div>
+                        <button id="open-notes">Open Notes</button>
+                    </div>
+                    <div>
+                        <button id="delete-year">Delete Course</button>
+                        <button id="add-year">Add Year</button>
+                    </div>
+                </div>
+            </div>
+            <div class="section-heading">
+                <p class="banner-element">Links</p>
+            </div>
+            <div class="section-heading">
+                <p class="banner-element">Course Finder</p>
+            </div>
+            <div id="section3">
+                <div id="links-container">
+                    <a class="link" href="http://judah.cedarville.edu/index.php" target="_blank">Course Page</a>
+                    <a class="link" href="http://judah.cedarville.edu/~ward/cs3220.html" target="_blank">Joel Ward</a>
+                    <a class="link" href="http://judah.cedarville.edu/~wollsch/cs3220.html" target="_blank">Emily Wollschlager</a>
+                    <a class="link" href="http://judah.cedarville.edu/~ye/cs3220.html" target="_blank">Kaicheng Ye</a>
+                </div>
+                <div id="KBB">
+                    <form>
+                        <div class="select-group">
+                            <label for="year">Year: </label>
+                            <select id="year" name="year">
+                                <option class="default" disabled selected value="default"> -- </option>
+                            </select>
+                        </div>
+                        
+                        <div class="select-group">
+                            <label for="make">Make: </label>
+                            <select id="make" name="make">
+                                <option class="default" disabled selected value="default"> -- </option>
+                            </select>
+                        </div>
+
+                        <div class="select-group">
+                            <label for="model">Model: </label>
+                            <select id="model" name="model">
+                                <option class="default" disabled selected value="default"> -- </option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="section4">
+                <table id="catalog"></table>
+            </div>
+        </div>
+    </body>
+</html>
+
