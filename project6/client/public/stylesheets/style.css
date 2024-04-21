@@ -9,6 +9,10 @@ body {
   grid-template-columns: 34% 30% 36%;
 }
 
+#notes {
+  display: none;
+}
+
 #info {
   display: grid;
   grid-template-columns: 50% 50%;

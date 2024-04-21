@@ -88,6 +88,9 @@ function App() {
                       <button id="add-year">Add Year</button>
                   </div>
               </div>
+              <div>
+                <textarea id="notes" name="notes" rows="4" cols="100"></textarea>
+              </div>
           </div>
           <div className="section-heading">
               <p className="banner-element">Links</p>

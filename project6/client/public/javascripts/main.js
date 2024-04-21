@@ -1,5 +1,16 @@
 try {
 
+    var notes_btn = document.getElementById("open-notes");
+
+    notes_btn.onclick = function(){
+        var x = document.getElementById("notes");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
 
     if (typeof student_plan !== 'undefined') {
         throw new Error("Safe quit");
@@ -52,8 +63,8 @@ try {
     }
 
     let cell_hours;
-    let listing; // new 
-    let cell; // new 
+    let listing;
+    let cell;
     for (let year in years) {
         for (let term in years[year]) {
             let cell = document.createElement("div");
@@ -65,7 +76,7 @@ try {
                 cell.classList.add("active-cell");
             }
 
-            cell.classList.add("droptarget"); // new
+            cell.classList.add("droptarget");
 
             let cell_year_term = document.createElement("p");
             cell_year_term.classList.add("semester");
@@ -83,7 +94,7 @@ try {
                 let course_designator = course.course_designator;
                 let course_name = course.course_name;
 
-                listing = document.createElement("div"); // new 
+                listing = document.createElement("div");
                 if (year < student_plan.plan.currYear) {
                     listing.classList.add("course");
                 } else {
