@@ -16,14 +16,14 @@ block content
             tr
               td= catalog.catalogyear
               td
-                - var url = "/catalog/edit/" + catalog.Id
+                - var url = "/catalog/edit/" + catalog.catalogYear
                 form(action=url method="GET")
                   .form
-                    input(type= "hidden" name= catID value= catalog.Id)
+                    input(type= "hidden" name= catID value= catalog.catalogYear)
                     input(type= "submit" value="Edit Catalog")
                 // form
               td 
-                - var url = "/catalog/delete/" + catalog.Id 
+                - var url = "/catalog/delete/" + catalog.catalogYear
                 form(action=url method="POST")
                   .form
                     input(type= "submit" value="Delete")

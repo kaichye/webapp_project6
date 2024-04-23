@@ -3,7 +3,7 @@ var db = require('../db/database.js');
 var router = express.Router();
 
 /*Edit catalog item*/
-router.get('edit/:catID', function(req, res, next) {
+router.get('/edit/:catID', function(req, res, next) {
     console.log(req.params);
     res.render('catalog');
 });
