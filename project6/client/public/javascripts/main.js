@@ -1,14 +1,23 @@
 try {
 
+    faculty = true;
+
     var notes_btn = document.getElementById("open-notes");
 
     notes_btn.onclick = function(){
-        var x = document.getElementById("notes");
-        if (x.style.display === "none") {
-            x.style.display = "block";
+        var n = document.getElementById("notes");
+        var f = document.getElementById("fac_notes");
+        if (n.style.display === "none") {
+            if (faculty) {
+                f.style.display = "block";
+            }
+            n.style.display = "block";
             notes_btn.textContent = "Close Notes";
         } else {
-            x.style.display = "none";
+            if (faculty) {
+                f.style.display = "none";
+            }
+            n.style.display = "none";
             notes_btn.textContent = "Open Notes"
         }
     }

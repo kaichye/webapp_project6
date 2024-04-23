@@ -14,6 +14,11 @@ body {
   padding: 20px 10px;
 }
 
+#fac_notes {
+  display: none;
+  padding: 20px 10px;
+}
+
 #info {
   display: grid;
   grid-template-columns: 50% 50%;
