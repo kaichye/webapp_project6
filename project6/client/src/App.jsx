@@ -89,8 +89,9 @@ function App() {
                   </div>
               </div>
               <div>
-                <textarea id="notes" name="notes" rows="4" cols="100"></textarea>
+                <textarea id="notes" name="notes" rows="10" cols="100"></textarea>
               </div>
+              <br></br>
           </div>
           <div className="section-heading">
               <p className="banner-element">Links</p>

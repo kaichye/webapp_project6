@@ -6,8 +6,10 @@ try {
         var x = document.getElementById("notes");
         if (x.style.display === "none") {
             x.style.display = "block";
+            notes_btn.textContent = "Close Notes";
         } else {
             x.style.display = "none";
+            notes_btn.textContent = "Open Notes"
         }
     }
 
