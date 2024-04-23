@@ -84,7 +84,7 @@ function App() {
                       <button id="open-notes">Open Notes</button>
                   </div>
                   <div>
-                      <button id="delete-year">Delete Course</button>
+                      <button id="delete-course">Delete Course</button>
                       <button id="add-year">Add Year</button>
                   </div>
               </div>

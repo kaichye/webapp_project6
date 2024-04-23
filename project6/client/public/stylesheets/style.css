@@ -89,7 +89,6 @@ button:hover {
 }
 
 .banner-element {
-  /* background-color: rgba(255, 255, 255, 0.6); */
   background-color: rgba(153, 203, 223, 0.6);
   text-align: center;
   font-weight: 700;
@@ -320,13 +319,15 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.62);
 }
 
-#delete-year {
+/* new */
+#delete-course {
   background-color: rgba(0, 0, 0, 0);
   height: 40px;
   width: 100px;
 }
 
-#delete-year:hover {
+/* new */
+#delete-course:hover {
   background-color: rgba(0, 0, 0, 0.62);
 }
 
