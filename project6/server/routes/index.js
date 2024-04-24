@@ -69,7 +69,3 @@ router.get('/getPlanIds', function(req, res, next) {
 
 module.exports = router;
 
-
-// TODO change to just get plan name?
-// make a file here and combine things?
-// do the same thing as .NET separate?
