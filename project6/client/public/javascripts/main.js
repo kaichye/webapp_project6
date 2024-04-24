@@ -246,7 +246,6 @@ try {
         let cat_div = document.createElement("div");
 
         req_courses.courses.forEach((course) => {
-            console.log(course)
             course_id = document.createElement("div");
 
             course_id.classList.add("req");
