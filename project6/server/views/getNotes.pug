@@ -1,13 +1,4 @@
-extends ./layout.pug
-
 block content
-  -var hiTitle = "Notes"
-  #main 
-        tbody
-          each note in notes
-              td= note.note
-              td
-              //td
-          //each
-        //tbody
-  //main
+each note in notes
+      td= note.note
+      //td
