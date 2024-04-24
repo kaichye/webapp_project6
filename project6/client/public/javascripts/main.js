@@ -1,10 +1,12 @@
 try {
 
+    //these need to be dynamic when we reimplement logins
     faculty = true;
 
     userId = 3;
     studentId = 1;
 
+    // notes code
     var notes_btn = document.getElementById("open-notes");
 
     student_note = null;
@@ -39,8 +41,6 @@ try {
     $('#s_notes').val(student_note);
     $('#f_notes').val(faculty_note);
 
-    console.log(student_note);
-    console.log(faculty_note);
 
     notes_btn.onclick = function(){
         var n = document.getElementById("notes");
@@ -60,6 +60,23 @@ try {
         }
     }
 
+    //get plan ids
+    plan_ids   = [];
+    plan_names = [];
+
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: 'http://localhost:3000/getPlanIds?id=' + studentId,
+        success: function(data){
+            data = data.split("<td>");
+            length = (data.length-1)/2;
+            for (let i = 0; i < length; i++){
+                plan_ids.push(data[2*i+1].split("</td>")[0]);
+                plan_names.push(data[2*i+2].split("</td>")[0]);
+            }
+        }
+    });
 
     if (typeof student_plan !== 'undefined') {
         throw new Error("Safe quit");
