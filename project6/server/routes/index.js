@@ -25,8 +25,10 @@ router.get('/getCombined', function(req, res, next) {
 /* GET notes. */
 // get notes at http://localhost:3000/getNotes?id=3
 router.get('/getNotes', function(req, res, next) {
-  var sql = "SELECT * from note where ownerId = ";
+  var sql = "SELECT * from note where studentId = ";
   sql += req.query.id;
+  sql += " and ownerId = ";
+  sql += req.query.oid;
   db.query(sql, (err, rows) => {
   
     if(err){
@@ -36,6 +38,22 @@ router.get('/getNotes', function(req, res, next) {
     }
     //Render index.pug page using array
     res.render('getNotes', {notes: rows});
+  }); 
+});
+
+/* GET notes. */
+router.get('/getPlanIds', function(req, res, next) {
+  var sql = "SELECT * from plan where userid = ";
+  sql += req.query.id;
+  db.query(sql, (err, rows) => {
+  
+    if(err){
+      console.log("SELECT from plan failed");
+      console.log(err);
+      return;
+    }
+    //Render index.pug page using array
+    res.render('getPlanIds', {plans: rows});
   }); 
 });
 

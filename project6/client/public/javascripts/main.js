@@ -13,7 +13,7 @@ try {
     $.ajax({
         async: false,
         type: 'GET',
-        url: 'http://localhost:3000/getNotes?id=' + studentId,
+        url: 'http://localhost:3000/getNotes?id=' + studentId + '&oid=' + studentId,
         success: function(data){
             data = data.split("<td>")[1];
             data = data.split("</td>")[0];
@@ -25,7 +25,7 @@ try {
         $.ajax({
             async: false,
             type: 'GET',
-            url: 'http://localhost:3000/getNotes?id=' + userId,
+            url: 'http://localhost:3000/getNotes?id=' + studentId + '&oid=' + userId,
             success: function(data){
                 data = data.split("<td>")[1];
                 data = data.split("</td>")[0];
