@@ -91,11 +91,11 @@ function App() {
               <div>
                 <div id="notes" >
                     <font color="white">Student Notes:</font>
-                    <textarea name="notes" rows="10" cols="100"></textarea>
+                    <textarea id="s_notes" rows="10" cols="100"></textarea>
                 </div>
                 <div id="fac_notes" >
                     <font color="white">Faculty Notes:</font>
-                    <textarea name="notes" rows="10" cols="100"></textarea>
+                    <textarea id="f_notes" rows="10" cols="100"></textarea>
                 </div>
               </div>
           </div>

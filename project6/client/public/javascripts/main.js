@@ -2,7 +2,45 @@ try {
 
     faculty = true;
 
+    userId = 3;
+    studentId = 1;
+
     var notes_btn = document.getElementById("open-notes");
+
+    student_note = null;
+    faculty_note = null;
+
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: 'http://localhost:3000/getNotes?id=' + studentId,
+        success: function(data){
+            data = data.split("<td>")[1];
+            data = data.split("</td>")[0];
+            student_note = data;
+        }
+    });
+
+    if (faculty){
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: 'http://localhost:3000/getNotes?id=' + userId,
+            success: function(data){
+                data = data.split("<td>")[1];
+                data = data.split("</td>")[0];
+                faculty_note = data;
+            }
+        });
+    }
+
+    var notes_btn = document.getElementById("open-notes");
+
+    $('#s_notes').val(student_note);
+    $('#f_notes').val(faculty_note);
+
+    console.log(student_note);
+    console.log(faculty_note);
 
     notes_btn.onclick = function(){
         var n = document.getElementById("notes");
