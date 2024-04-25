@@ -261,6 +261,7 @@ required.forEach(function(requirement){
 
 const cells = document.querySelectorAll(".cell");
 
+//new, simplified
 cells.forEach(function(cell) {
 
     cell.addEventListener('dragover', function(event){
@@ -270,15 +271,20 @@ cells.forEach(function(cell) {
         
     });
 
-    /*unfortunately enableDefault isn't a thing. an attempt to make it not be able to drop on a course
-    courses = document.querySelectorAll(".course");
+    cell.addEventListener('drop', drop);
 
-    courses.forEach(function(course){
-        course.addEventListener('dragover', function(event){
-            event.enableDefault();
-        })
-    })
-    */
+});
+/*
+cells.forEach(function(cell) {
+
+    cell.addEventListener('dragover', function(event){
+        if($(event.target).hasClass("droptarget")){
+            event.preventDefault();
+        }
+        
+    });
+
+
 
     cell.addEventListener('drop', function(event){  
         //listing = "";
@@ -355,12 +361,6 @@ cells.forEach(function(cell) {
         
         newTitle.innerHTML = "Hours: " + semester_hours;
 
-        
-        
-        //This works for changing the styles, except when you nest the courses. 
-        //Because the course has active-designator instead of active-cell, it's falling into the else
-        ///*$(event.target).firstChild.hasClass('active-designator')*/
-        //console.log(event.target.firstChild);
         if ($(event.target).hasClass('active-cell')){
             dragged.classList.add("active-course");
             dragged.firstChild.classList.add("active-designator");
@@ -380,26 +380,289 @@ cells.forEach(function(cell) {
         //dragged = "";
     });
 });
-
-const deleteCourse = document.getElementById("delete-year");
+*/
+const deleteCourse = document.getElementById("delete-course");
 deleteCourse.addEventListener('dragover', function(event){
     event.preventDefault();
 })
 
 deleteCourse.addEventListener('drop', function(event){
-    //new except last line (removeChild)
     let semester_credit_line = dragged.parentNode.getElementsByClassName("credit-hours")[0];
     semester_credit_line = semester_credit_line.innerHTML.split(": ");
     let semester_hours = parseInt(semester_credit_line[1]);
 
     let newTitle = dragged.parentNode.firstChild.getElementsByClassName("credit-hours")[0];
-    
+
     let newCourseDesignator = dragged.getElementsByClassName("designator")[0].innerHTML;
-    let newHours = student_plan.catalog.courses[newCourseDesignator].credits;
-    semester_hours -= newHours; 
-    
+    let newHours = catalog_courses[newCourseDesignator].credits;
+    semester_hours -= newHours;
+
     newTitle.innerHTML = "Hours: " + semester_hours;
 
     dragged.parentNode.removeChild(dragged);
-    //dragged = "";
+
+    course_designator = dragged.getElementsByTagName("p")[0].innerHTML;
+    console.log(course_designator);
+    // Remove deleted course from met courses array
+    courses_planned = courses_planned.filter(e => e !== course_designator);
+
+    updateRequirements();
 })
+
+//new for delete year
+let delete_year = document.getElementById("delete-year");
+delete_year.addEventListener('click', function(event){
+    //remove summer
+    let courses = (section2.lastElementChild.previousElementSibling).previousElementSibling.querySelectorAll(".course");
+ 
+    courses.forEach(function(course){
+        let course_designator = course.getElementsByTagName("p")[0].innerHTML;
+        // Remove deleted course from met courses array
+        courses_planned = courses_planned.filter(e => e !== course_designator);
+        
+        console.log(course_designator);
+        console.log(courses_planned);
+
+        updateRequirements();
+    })
+    (section2.lastElementChild.previousElementSibling).previousElementSibling.remove();
+
+    //remove spring
+    courses = (section2.lastElementChild.previousElementSibling).previousElementSibling.querySelectorAll(".course");
+ 
+    courses.forEach(function(course){
+        let course_designator = course.getElementsByTagName("p")[0].innerHTML;
+        // Remove deleted course from met courses array
+        courses_planned = courses_planned.filter(e => e !== course_designator);
+        
+        console.log(course_designator);
+        console.log(courses_planned);
+
+        updateRequirements();
+    })
+    (section2.lastElementChild.previousElementSibling).previousElementSibling.remove();
+
+    //remove fall
+    courses = (section2.lastElementChild.previousElementSibling).previousElementSibling.querySelectorAll(".course");
+ 
+    courses.forEach(function(course){
+        let course_designator = course.getElementsByTagName("p")[0].innerHTML;
+        // Remove deleted course from met courses array
+        courses_planned = courses_planned.filter(e => e !== course_designator);
+        
+        console.log(course_designator);
+        console.log(courses_planned);
+
+        //it's changing the colors, but the courses_planned
+        //now has undefined. Is this just updating when you
+        //add it to the plan? and all it does when you 
+        //delete is flip the colors?
+        updateRequirements();
+    })
+    (section2.lastElementChild.previousElementSibling).previousElementSibling.remove();
+
+})
+
+function updateRequirements(course_designator) {
+    if (!(courses_planned.includes(course_designator))) {
+        courses_planned.push(course_designator);
+    }
+
+    accordion_courses = requirements.querySelectorAll("#requirements .req");
+
+    accordion_courses.forEach(function(req){
+        let innerHTML = req.innerText;
+        innerHTML = innerHTML.split(":");
+
+        designator = innerHTML[0];
+        //console.log(designator);
+
+        if (courses_planned.includes(designator)) {
+            req.classList.remove("req_course");
+            req.classList.add("met-requirement");
+        } else {
+            req.classList.remove("met-requirement");
+            req.classList.add("req_course");
+        }
+    });
+}
+
+//new for add year
+let add_button = document.getElementById("add-year");
+add_button.addEventListener('click', function(event){
+    let fallCell = document.createElement("div");
+    let springCell = document.createElement("div");
+    let summerCell = document.createElement("div");
+
+    fallCell.classList.add("cell", "active-cell", "droptarget", "new-cell");
+    springCell.classList.add("cell", "active-cell", "droptarget", "new-cell");
+    summerCell.classList.add("cell", "active-cell", "droptarget", "new-cell");
+
+    let fallCell_year_term = document.createElement("p");
+    let springCell_year_term = document.createElement("p");
+    let summerCell_year_term = document.createElement("p");
+
+    fallCell_year_term.classList.add("semester");
+    springCell_year_term.classList.add("semester");
+    summerCell_year_term.classList.add("semester");
+
+    let terms = document.getElementsByClassName("semester");
+    let last_term = terms[terms.length - 1];
+
+    let last_year;
+    let new_year;
+    if (last_term == null){
+        //gets the first year in our years object
+        last_year = Object.keys(years)[0]
+    }
+    else {
+        last_year = parseInt(last_term.innerHTML.split(" ")[1]).toString();
+    }
+    
+    new_year = (parseInt(last_year)+1).toString();
+    let fallTextNode = document.createTextNode("Fall" + " " + last_year);
+    let springTextNode = document.createTextNode("Spring" + " " + new_year);
+    let summerTextNode = document.createTextNode("Summer" + " " + new_year);
+
+    fallCell_year_term.appendChild(fallTextNode);
+    springCell_year_term.appendChild(springTextNode);
+    summerCell_year_term.appendChild(summerTextNode);
+
+    let fallTitle_div = document.createElement("div");
+    fallTitle_div.classList.add("title");
+    fallTitle_div.appendChild(fallCell_year_term);
+
+    let springTitle_div = document.createElement("div");
+    springTitle_div.classList.add("title");
+    springTitle_div.appendChild(springCell_year_term);
+
+    let summerTitle_div = document.createElement("div");
+    summerTitle_div.classList.add("title");
+    summerTitle_div.appendChild(summerCell_year_term);
+
+    let fallCell_hours = document.createElement("p");
+    let springCell_hours = document.createElement("p");
+    let summerCell_hours = document.createElement("p");
+    fallCell_hours.classList.add("credit-hours");
+    springCell_hours.classList.add("credit-hours");
+    summerCell_hours.classList.add("credit-hours");
+
+    fallTextNode = document.createTextNode("Hours: " + 0);
+    springTextNode = document.createTextNode("Hours: " + 0);
+    summerTextNode = document.createTextNode("Hours: " + 0);
+    fallCell_hours.appendChild(fallTextNode);
+    springCell_hours.appendChild(springTextNode);
+    summerCell_hours.appendChild(summerTextNode);
+
+    fallTitle_div.appendChild(fallCell_hours);
+    springTitle_div.appendChild(springCell_hours);
+    summerTitle_div.appendChild(summerCell_hours);
+
+    fallCell.insertBefore(fallTitle_div, fallCell.firstChild);
+    springCell.insertBefore(springTitle_div, springCell.firstChild);
+    summerCell.insertBefore(summerTitle_div, summerCell.firstChild);
+
+    let section2 = document.getElementById("section2");
+    let bottom_strip = document.getElementById("bottom-strip");
+    section2.insertBefore(fallCell, bottom_strip);
+    section2.insertBefore(springCell, bottom_strip);
+    section2.insertBefore(summerCell, bottom_strip);
+
+    const cells = document.querySelectorAll(".new-cell");
+    cells.forEach(function(cell) {
+
+        cell.addEventListener('dragover', function(event){
+            if($(event.target).hasClass("droptarget")){
+                event.preventDefault();
+            }
+        });
+
+        cell.addEventListener('drop', drop);
+    });
+});
+
+//new, simplified
+function drop(event){
+    console.log(dragged);
+    if ($(dragged).hasClass('req_course') || $(dragged).hasClass('table_class')){
+        if ($(dragged).hasClass('req_course')){
+            dragged.classList.remove("req_course");
+        }
+        
+        let innerHTML = dragged.innerText;
+        innerHTML = innerHTML.split(":");
+
+        let course_designator = innerHTML[0];
+        course_name = innerHTML[1];
+
+        let listing = document.createElement("div");
+        listing.classList.add("course");
+
+        let listing_designator = document.createElement("p");
+
+        listing_designator.classList.add("designator");
+        let textNode = document.createTextNode(course_designator);
+        listing_designator.appendChild(textNode);
+
+        let listing_name = document.createElement("p");
+        listing_name.classList.add("name");
+        textNode = document.createTextNode(course_name);
+        listing_name.appendChild(textNode);
+
+        listing.appendChild(listing_designator);
+        listing.appendChild(listing_name);
+
+        listing.setAttribute('draggable', true);
+        
+        dragged = listing;   
+        dragged.addEventListener('dragstart', function(event){
+            dragged = event.target;
+        });         
+    }
+
+    else {
+        let semester_credit_line = dragged.parentNode.getElementsByClassName("credit-hours")[0];
+        semester_credit_line = semester_credit_line.innerHTML.split(": ");
+        let semester_hours = parseInt(semester_credit_line[1]);
+
+        let newTitle = dragged.parentNode.firstChild.getElementsByClassName("credit-hours")[0];
+        
+        let newCourseDesignator = dragged.getElementsByClassName("designator")[0].innerHTML;
+        let newHours = student_plan.catalog.courses[newCourseDesignator].credits;
+        semester_hours -= newHours; 
+        
+        newTitle.innerHTML = "Hours: " + semester_hours;
+    }
+
+    let semester_credit_line = event.target.getElementsByClassName("credit-hours")[0];
+    semester_credit_line = semester_credit_line.innerHTML.split(": ");
+    let semester_hours = parseInt(semester_credit_line[1]);
+
+    let newTitle = event.target.firstChild.getElementsByClassName("credit-hours")[0];
+    
+    let newCourseDesignator = dragged.getElementsByClassName("designator")[0].innerHTML;
+    let newHours = student_plan.catalog.courses[newCourseDesignator].credits;
+    semester_hours += newHours; 
+    
+    newTitle.innerHTML = "Hours: " + semester_hours;
+
+    let course_designator;
+
+    if ($(event.target).hasClass('active-cell')){
+        dragged.classList.add("active-course");
+        dragged.firstChild.classList.add("active-designator");
+        dragged.firstChild.classList.remove("history-designator");
+        
+        course_designator = dragged.getElementsByTagName("p")[0].textContent;
+    }
+    else {
+        dragged.classList.remove("active-course");
+        dragged.firstChild.classList.add("history-designator");
+        dragged.firstChild.classList.remove("active-designator");
+        
+        course_designator = dragged.getElementsByTagName("p")[0].textContent;
+    }
+    (event.target).appendChild(dragged);
+
+    updateRequirements(course_designator);
+}
