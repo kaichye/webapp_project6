@@ -123,6 +123,7 @@ try {
         url: 'http://localhost:3000/getCombined?planid=' + planId + '&userid=' + userId,
         success: function(data){
             data = data.replace(/&quot;/g, '"');
+            data = data.replace(/&amp;/g, '&');
             data = data.replace(/\n/g, '');
             console.log(data);
             student_plan=JSON.parse(data);
