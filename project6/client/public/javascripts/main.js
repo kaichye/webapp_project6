@@ -149,6 +149,8 @@ try {
     let courses = student_plan.plan.courses;
 
     let courses_planned = [];
+    let add = [];
+    let del = [];
 
     let catalog_courses = student_plan.catalog.courses;
     for (let course in courses){
@@ -547,12 +549,18 @@ try {
         courses_planned = courses_planned.filter(e => e !== course_designator);
     
         updateRequirements();
+
+        // save plan
+        let semester = dragged.parentNode.getElementsByClassName("semester")[0];
+        year = semester.innerHTML.split(" ")[1];
+        term = semester.innerHTML.split(" ")[0];
+        planSaveTracker(planid, year, term, course_designator);
     })
     
     let delete_year = document.getElementById("delete-year");
     delete_year.addEventListener('click', function(event){
         //remove summer
-        let courses = section2.lastElementChild.previousElementSibling.querySelectorAll(".course");
+        let courses = section2.lastElementChild.previousElementSibling.previousElementSibling.querySelectorAll(".course");
     
         courses.forEach(function(course){
             let course_designator = course.getElementsByTagName("p")[0].innerHTML;
@@ -564,10 +572,10 @@ try {
 
             updateRequirements();
         })
-        section2.lastElementChild.previousElementSibling.remove();
+        section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
         //remove spring
-        courses = section2.lastElementChild.previousElementSibling.querySelectorAll(".course");
+        courses = section2.lastElementChild.previousElementSibling.previousElementSibling.querySelectorAll(".course");
     
         courses.forEach(function(course){
             let course_designator = course.getElementsByTagName("p")[0].innerHTML;
@@ -579,10 +587,10 @@ try {
 
             updateRequirements();
         })
-        section2.lastElementChild.previousElementSibling.remove();
+        section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
         //remove fall
-        courses = section2.lastElementChild.previousElementSibling.querySelectorAll(".course");
+        courses = section2.lastElementChild.previousElementSibling.previousElementSibling.querySelectorAll(".course");
     
         courses.forEach(function(course){
             let course_designator = course.getElementsByTagName("p")[0].innerHTML;
@@ -598,7 +606,7 @@ try {
             //delete is flip the colors?
             updateRequirements();
         })
-        section2.lastElementChild.previousElementSibling.remove();
+        section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
     })
     
@@ -804,6 +812,14 @@ try {
         (event.target).appendChild(dragged);
 
         updateRequirements(course_designator);
+    }
+
+
+    function planSaveTracker(planid, year, term, course_designator) {
+        console.log(planid);
+        console.log(year);
+        console.log(term);
+        console.log(course_designator);
     }
 
 } catch (error) {
