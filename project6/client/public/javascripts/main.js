@@ -103,6 +103,11 @@ try {
     }
 
     
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    
 
     if (typeof student_plan !== 'undefined') {
         throw new Error("Safe quit");

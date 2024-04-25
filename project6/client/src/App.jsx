@@ -66,7 +66,7 @@ function App() {
       </header>
       <div id="myModal" className="modal">
         <div className="modal-content">
-            <span className="close">x</span>
+            <span id="close">x</span>
             <p className="title">Plans: </p>
         </div>
       </div>
