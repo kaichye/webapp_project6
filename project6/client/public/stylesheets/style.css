@@ -81,6 +81,11 @@ button:hover {
   width: 80px;
 }
 
+#plans {
+  height: 40px;
+  width: 80px;
+}
+
 #banner {
   display: grid;
   grid-template-columns: 25% 25.2% 49.8%;
@@ -338,6 +343,16 @@ button:hover {
 }
 
 #add-year:hover {
+  background-color: rgba(0, 0, 0, 0.62);
+}
+
+#delete-year {
+  background-color: rgba(0, 0, 0, 0);
+  height: 40px;
+  width: 100px;
+}
+
+#delete-year:hover {
   background-color: rgba(0, 0, 0, 0.62);
 }
 
