@@ -269,12 +269,17 @@ try {
     // Accordion
     let plan_reqs = {};
     
+    //FIXME TODO dynamic
+    planId = 3;
+
     $.ajax({
         async: false,
         type: 'GET',
-        url: 'javascripts/getRequirements.txt',
-        //url: 'https://localhost:7271/Planmajors/GetRequirements/1',
+        //url: 'javascripts/getRequirements.txt',
+        url: 'http://localhost:3000/getRequirements?planid=' + planId,
         success: function (data) {
+            data = data.replace(/&quot;/g, '"');
+            data = data.replace(/\n/g, '');
             plan_reqs=JSON.parse(data)
         }
     });

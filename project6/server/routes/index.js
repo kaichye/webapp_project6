@@ -99,11 +99,42 @@ router.get('/getRequirements', function(req, res, next) {
       console.log(err);
       return;
     }
-    for (let i =0; i < rows.length; i++) {
-      majors += rows[i].major += ", ";
-    }
 
-    res.render('getRequirements', {notes: rows});
+    sql = "SELECT DISTINCT courseid, type FROM requirement WHERE ";
+    for (let i =0; i < rows.length; i++) {
+      sql += "major = '" + rows[i].major + "' OR ";
+    }
+    sql = sql.substring(0, sql.length - 3);
+    sql += "ORDER BY CASE WHEN type = 'Core' THEN 1 WHEN type = 'Electives' THEN 2 WHEN type = 'Cognates' THEN 3 WHEN type = 'GenEds' THEN 4 END, courseid"
+    db.query(sql, (err, rows) => {
+    
+      if(err){
+        console.log("SELECT from requirement failed");
+        console.log(err);
+        return;
+      }
+      reqs = '';
+      type = "";
+      saw = [];
+      for (let i =0; i < rows.length; i++) {
+        if (rows[i].type != type) {
+          if (type != "") {
+            reqs = reqs.substring(0, reqs.length - 1);
+            reqs += "]},";
+          }
+          type = rows[i].type;
+          reqs += '"' + type + '":{"courses":[';
+        }
+
+        if (!(saw.includes(rows[i].courseid))) {
+          saw.push(rows[i].courseid);
+          reqs += '"' + rows[i].courseid + '",';
+        }
+      }
+      reqs = reqs.substring(0, reqs.length - 1);
+
+      res.render('getRequirements', {reqs: reqs});
+    }); 
   }); 
 });
 
