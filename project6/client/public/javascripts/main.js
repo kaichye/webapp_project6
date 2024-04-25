@@ -125,7 +125,7 @@ try {
         planId = plan_ids[0];
     }
     else {
-        planId = localStorage.getItem("planId")
+        planId = localStorage.getItem("planId");
     }
     userId = 2;
 
@@ -530,6 +530,7 @@ try {
     deleteCourse.addEventListener('drop', function (event) {
     
         let semester_credit_line = dragged.parentNode.getElementsByClassName("credit-hours")[0];
+        let semester = dragged.parentNode.getElementsByClassName("semester")[0];
         semester_credit_line = semester_credit_line.innerHTML.split(": ");
         let semester_hours = parseInt(semester_credit_line[1]);
     
@@ -551,10 +552,9 @@ try {
         updateRequirements();
 
         // save plan
-        let semester = dragged.parentNode.getElementsByClassName("semester")[0];
         year = semester.innerHTML.split(" ")[1];
         term = semester.innerHTML.split(" ")[0];
-        planSaveTracker(planid, year, term, course_designator);
+        planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "del");
     })
     
     let delete_year = document.getElementById("delete-year");
@@ -564,13 +564,19 @@ try {
     
         courses.forEach(function(course){
             let course_designator = course.getElementsByTagName("p")[0].innerHTML;
+            let semester = course.parentNode.getElementsByClassName("semester")[0];
             // Remove deleted course from met courses array
             courses_planned = courses_planned.filter(e => e !== course_designator);
-            
+
             console.log(course_designator); 
             console.log(courses_planned);
 
             updateRequirements();
+
+            // save plan
+            year = semester.innerHTML.split(" ")[1];
+            term = semester.innerHTML.split(" ")[0];
+            planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "del");
         })
         section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
@@ -579,6 +585,8 @@ try {
     
         courses.forEach(function(course){
             let course_designator = course.getElementsByTagName("p")[0].innerHTML;
+            let semester = course.parentNode.getElementsByClassName("semester")[0];
+            
             // Remove deleted course from met courses array
             courses_planned = courses_planned.filter(e => e !== course_designator);
             
@@ -586,6 +594,11 @@ try {
             console.log(courses_planned);
 
             updateRequirements();
+
+            // save plan
+            year = semester.innerHTML.split(" ")[1];
+            term = semester.innerHTML.split(" ")[0];
+            planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "del");
         })
         section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
@@ -594,6 +607,7 @@ try {
     
         courses.forEach(function(course){
             let course_designator = course.getElementsByTagName("p")[0].innerHTML;
+            let semester = course.parentNode.getElementsByClassName("semester")[0];
             // Remove deleted course from met courses array
             courses_planned = courses_planned.filter(e => e !== course_designator);
             
@@ -605,6 +619,11 @@ try {
             //add it to the plan? and all it does when you 
             //delete is flip the colors?
             updateRequirements();
+
+            // save plan
+            year = semester.innerHTML.split(" ")[1];
+            term = semester.innerHTML.split(" ")[0];
+            planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "del");
         })
         section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
@@ -730,7 +749,7 @@ try {
 
     //new, simplified
     function drop(event){
-        console.log(dragged);
+        let addition = false;
         if ($(dragged).hasClass('req_course') || $(dragged).hasClass('table_class')){
             if ($(dragged).hasClass('req_course')){
                 dragged.classList.remove("req_course");
@@ -764,7 +783,9 @@ try {
             dragged = listing;   
             dragged.addEventListener('dragstart', function(event){
                 dragged = event.target;
-            });         
+            });
+
+            addition = true;
         }
 
         else {
@@ -812,16 +833,85 @@ try {
         (event.target).appendChild(dragged);
 
         updateRequirements(course_designator);
+
+        if (addition) {
+            let semester = dragged.parentNode.getElementsByClassName("semester")[0];
+
+            // save plan
+            year = semester.innerHTML.split(" ")[1];
+            term = semester.innerHTML.split(" ")[0];
+            planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "add");
+        }
     }
 
 
-    function planSaveTracker(planid, year, term, course_designator) {
-        console.log(planid);
-        console.log(year);
-        console.log(term);
-        console.log(course_designator);
+    function planSaveTracker(planid, year, term, course_designator, action) {
+        if (action == "del") {
+            temp = []
+            temp.push('"' + planid + '", ');
+            temp.push('"' + year + '", ');
+            temp.push('"' + term + '", ');
+            temp.push('"' + course_designator + '"');
+            del.push(temp);
+            console.log(del);
+        } else if (action == "add") {
+            temp = []
+            temp.push('"' + planid + '", ');
+            temp.push('"' + year + '", ');
+            temp.push('"' + term + '", ');
+            temp.push('"' + course_designator + '"');
+            add.push(temp);
+            console.log(del);
+        }
     }
+
+    let save = document.getElementById("save");
+    save.addEventListener('click', function(event){
+        dat = '{"planid": "' + localStorage.getItem("planId") + '", ';
+        dat += '"add": [';
+        for (let i = 0; i < add.length; i++) {
+            dat += '[';
+            for (let j = 0; j < add[i].length; j++) {
+                dat += add[i][j];
+            }
+            dat += '], ';
+        }
+        if (add.length != 0) {
+            dat = dat.substring(0, dat.length - 2);
+        }
+        dat += '], ';
+
+        dat += '"del": [';
+        for (let i = 0; i < del.length; i++) {
+            dat += '[';
+            for (let j = 0; j < del[i].length; j++) {
+                dat += del[i][j];
+            }
+            dat += '], ';
+        }
+        if (del.length != 0) {
+            dat = dat.substring(0, dat.length - 2);
+        }
+        dat += ']}';
+        console.log(dat);
+
+        $.ajax({
+            async: false,
+            type: 'POST',
+            url: 'http://localhost:3000/savePlan',
+            data: dat,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function(data){}
+        });
+
+        location.reload();
+    });
 
 } catch (error) {
 
 }
+
+
+// FIXME TODO
+// add in moving between terms
