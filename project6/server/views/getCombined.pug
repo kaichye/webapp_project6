@@ -1,6 +1,12 @@
-|#{"{"}
-|#{planname}
-|#{user}
-
-//- each catalog in catalogs
-//-   |#{catalog.catalogyear}
+|#{'{"plan":{"student":"'}
+|#{user + '"'}
+|#{',"name":"'}
+|#{planname + '"'}
+|#{',"major":"'}
+|#{majors + '"'}
+|#{',"currYear":2024,"currTerm":"Spring","courses":{'}
+|#{courses}
+|#{'}},"catYear":2021},'}
+|#{'"catalog":{"year":2021,"courses":{'}
+|#{catalog}
+|#{'}}}}'}
