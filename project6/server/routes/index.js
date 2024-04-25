@@ -138,6 +138,50 @@ router.get('/getRequirements', function(req, res, next) {
   }); 
 });
 
+router.post('/savePlan', function(req, res, next) {
+  planid = req.body.planid;
+  add = req.body.add;
+  del = req.body.del;
+
+  for (let i =0; i < add.length; i++) {
+    var sql = "INSERT INTO take values (";
+    sql += '"' + add[i][0] + '", ';
+    sql += '"' + add[i][1] + '", ';
+    sql += '"' + add[i][2] + '", ';
+    sql += '"' + add[i][3] + '"';
+    sql += ")";
+    db.query(sql, (err, rows) => {
+      if(err){
+        console.log("INSERT to take failed");
+        console.log(err);
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ sucess: false }));
+        return;
+      }    
+    });
+  }
+
+  for (let i =0; i < del.length; i++) {
+    var sql = "DELETE FROM take WHERE ";
+    sql += 'planid = "' + del[i][0] + '" AND ';
+    sql += 'year = "' + del[i][1] + '" AND ';
+    sql += 'term = "' + del[i][2] + '" AND ';
+    sql += 'courseid = "' + del[i][3] + '"';
+    db.query(sql, (err, rows) => {
+      if(err){
+        console.log("DELETE from take failed");
+        console.log(err);
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ sucess: false }));
+        return;
+      }    
+    });
+  }
+
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({ success: true }));
+});
+
 
 /* GET notes. */
 // get notes at http://localhost:3000/getNotes?id=3

@@ -124,9 +124,11 @@ try {
         success: function(data){
             data = data.replace(/&quot;/g, '"');
             data = data.replace(/\n/g, '');
+            console.log(data);
             student_plan=JSON.parse(data);
         }
     });
+    console.log(student_plan);
 
     let years = {};
 
