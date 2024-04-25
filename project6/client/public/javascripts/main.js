@@ -13,7 +13,7 @@ try {
 
     //these need to be dynamic when we reimplement logins
     // FIXME TODO these need to be dynamic when we reimplement logins
-    faculty = true;
+    faculty = false;
 
     userId = 3;
     studentId = 1;
