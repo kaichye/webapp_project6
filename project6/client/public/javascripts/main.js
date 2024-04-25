@@ -552,7 +552,7 @@ try {
     let delete_year = document.getElementById("delete-year");
     delete_year.addEventListener('click', function(event){
         //remove summer
-        let courses = section2.lastElementChild.previousElementSibling.querySelectorAll(".course");
+        let courses = section2.lastElementChild.previousElementSibling.previousElementSibling.querySelectorAll(".course");
     
         courses.forEach(function(course){
             let course_designator = course.getElementsByTagName("p")[0].innerHTML;
@@ -564,10 +564,10 @@ try {
 
             updateRequirements();
         })
-        section2.lastElementChild.previousElementSibling.remove();
+        section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
         //remove spring
-        courses = section2.lastElementChild.previousElementSibling.querySelectorAll(".course");
+        courses = section2.lastElementChild.previousElementSibling.previousElementSibling.querySelectorAll(".course");
     
         courses.forEach(function(course){
             let course_designator = course.getElementsByTagName("p")[0].innerHTML;
@@ -579,10 +579,10 @@ try {
 
             updateRequirements();
         })
-        section2.lastElementChild.previousElementSibling.remove();
+        section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
         //remove fall
-        courses = section2.lastElementChild.previousElementSibling.querySelectorAll(".course");
+        courses = section2.lastElementChild.previousElementSibling.previousElementSibling.querySelectorAll(".course");
     
         courses.forEach(function(course){
             let course_designator = course.getElementsByTagName("p")[0].innerHTML;
@@ -598,7 +598,7 @@ try {
             //delete is flip the colors?
             updateRequirements();
         })
-        section2.lastElementChild.previousElementSibling.remove();
+        section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
     })
     
