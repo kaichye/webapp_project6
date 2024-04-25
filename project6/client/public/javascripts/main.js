@@ -110,13 +110,6 @@ try {
     span.onclick = function() {
         modal.style.display = "none";
     }
-    
-
-    if (typeof student_plan !== 'undefined') {
-        throw new Error("Safe quit");
-    } else {
-        let student_plan = {};
-    }
 
     // let student_plan = {};
 
@@ -151,6 +144,9 @@ try {
     let courses_planned = [];
     let add = [];
     let del = [];
+    let startTerm = "";
+    let startYear = "";
+    let startCourse = "";
 
     let catalog_courses = student_plan.catalog.courses;
     for (let course in courses){
@@ -391,6 +387,13 @@ try {
     courseList.forEach(function(course){
         course.addEventListener('dragstart', function(event){
             dragged = event.target;
+            
+            let semester = dragged.parentNode.getElementsByClassName("semester")[0];
+
+            // hold for save plan
+            startYear = semester.innerHTML.split(" ")[1];
+            startTerm = semester.innerHTML.split(" ")[0];
+            startCourse = dragged.getElementsByTagName("p")[0].textContent;
         });
     });
     
@@ -834,14 +837,19 @@ try {
 
         updateRequirements(course_designator);
 
-        if (addition) {
-            let semester = dragged.parentNode.getElementsByClassName("semester")[0];
+        let semester = dragged.parentNode.getElementsByClassName("semester")[0];
 
-            // save plan
-            year = semester.innerHTML.split(" ")[1];
-            term = semester.innerHTML.split(" ")[0];
-            planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "add");
+        // save plan
+        year = semester.innerHTML.split(" ")[1];
+        term = semester.innerHTML.split(" ")[0];
+        planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "add");
+        if (startCourse == course_designator) {
+            planSaveTracker(localStorage.getItem("planId"), startYear, startTerm, startCourse, "del");
+            
+            startYear = "";
+            startTerm = "";
         }
+        startCourse = "";
     }
 
 
@@ -861,7 +869,7 @@ try {
             temp.push('"' + term + '", ');
             temp.push('"' + course_designator + '"');
             add.push(temp);
-            console.log(del);
+            console.log(add);
         }
     }
 
