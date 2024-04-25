@@ -1,5 +1,11 @@
 try {
 
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("plans");
+    var span = document.getElementById("close");
+    var modal_content = document.getElementsByClassName("modal-content")[0];
+    var plan_form = document.getElementById("plan-form");
+
     //these need to be dynamic when we reimplement logins
     faculty = true;
 
@@ -77,6 +83,20 @@ try {
             }
         }
     });
+
+    for (let i = 0; i < plan_ids.length; i++) {
+        let button = document.createElement('p');
+        button.innerText = plan_names[i];
+        button.id = plan_ids[i];
+        button.classList.add("plan_button");
+        modal_content.appendChild(button);
+    }
+
+    btn.onmousedown = function() {
+        modal.style.display = "block";
+    }
+
+    
 
     if (typeof student_plan !== 'undefined') {
         throw new Error("Safe quit");

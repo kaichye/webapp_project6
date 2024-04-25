@@ -60,9 +60,16 @@ function App() {
                 <button id="logout">Log Out</button>
                 <button id="options">Options</button>
                 <button id="save">Save</button>
+                <button id="plans">Plans</button>
             </div>
         </div>
       </header>
+      <div id="myModal" className="modal">
+        <div className="modal-content">
+            <span className="close">x</span>
+            <p className="title">Plans: </p>
+        </div>
+      </div>
       <div id="banner">
           <p className="banner-element">Requirements</p>
           <p className="banner-element" id="plan">Academic Plan: CSCY</p>
