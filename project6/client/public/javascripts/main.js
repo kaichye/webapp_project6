@@ -95,6 +95,10 @@ try {
         button.innerText = plan_names[i];
         button.id = plan_ids[i];
         button.classList.add("plan_button");
+        button.onclick = function() {
+            localStorage.setItem("planId", button.id);
+            location.reload();
+        }
         modal_content.appendChild(button);
     }
 
@@ -106,7 +110,6 @@ try {
     span.onclick = function() {
         modal.style.display = "none";
     }
-
     
 
     if (typeof student_plan !== 'undefined') {
@@ -118,7 +121,12 @@ try {
     // let student_plan = {};
 
     // FIXME TODO dynamic
-    planId = 3;
+    if (localStorage.getItem("planId") == null){
+        planId = plan_ids[0];
+    }
+    else {
+        planId = localStorage.getItem("planId")
+    }
     userId = 2;
 
     $.ajax({
@@ -551,7 +559,7 @@ try {
             // Remove deleted course from met courses array
             courses_planned = courses_planned.filter(e => e !== course_designator);
             
-            console.log(course_designator);
+            console.log(course_designator); 
             console.log(courses_planned);
 
             updateRequirements();
