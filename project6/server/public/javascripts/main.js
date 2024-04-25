@@ -1,9 +1,4 @@
 try {
-    if (typeof student_plan !== 'undefined') {
-        throw new Error("Safe quit");
-    } else {
-        let student_plan = {};
-    }
 
     // FIXME TODO these need to be dynamic when we reimplement logins
     faculty = true;
@@ -83,8 +78,11 @@ try {
         }
     });
 
-
-    // let student_plan = {};
+    if (typeof student_plan !== 'undefined') {
+        throw new Error("Safe quit");
+    } else {
+        let student_plan = {};
+    }
 
     // FIXME TODO dynamic
     planId = 3;
@@ -96,8 +94,6 @@ try {
         //url: 'javascripts/getCombined.txt',
         url: 'http://localhost:3000/getCombined?planid=' + planId + '&userid=' + userId,
         success: function(data){
-            data = data.replace(/&quot;/g, '"');
-            data = data.replace(/\n/g, '');
             student_plan=JSON.parse(data);
         }
     });

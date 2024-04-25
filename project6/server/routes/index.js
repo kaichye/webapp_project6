@@ -7,9 +7,12 @@ router.use((req, res, next) => {
   next();
 });
 
-/* GET home page. */
+router.use(express.static('public'));
+
+/* GET combined */
 router.get('/getCombined', function(req, res, next) {
-  var sql = "SELECT * FROM plan WHERE planid = 3";
+  var sql = "SELECT * FROM plan WHERE planid = ";
+  sql += req.query.planid;
   db.query(sql, function(err, rows) {
   
     if(err){
@@ -18,19 +21,92 @@ router.get('/getCombined', function(req, res, next) {
       return;
     }
     plan_name = rows[0].planname;
-    sql = "SELECT * FROM user WHERE userid = 2";
-    db.query(sql, plan_name, function(err, rows) {
+    sql = "SELECT * FROM user WHERE userid = ";
+    sql += req.query.userid;
+    db.query(sql, function(err, rows) {
   
       if(err){
         console.log("SELECT from user failed");
         console.log(err);
         return;
       }
-      user = rows[0].userid;
-      res.render('getCombined', {user: user, planname: plan_name});
+      user = rows[0].name;
+      sql = "SELECT * FROM plan join planmajor on plan.planid = planmajor.planid WHERE plan.planid = ";
+      sql += req.query.planid;
+      db.query(sql, function(err, rows) {
+    
+        if(err){
+          console.log("SELECT from plan join planmajor failed");
+          console.log(err);
+          return;
+        }
+        majors = "";
+        for (let i =0; i < rows.length; i++) {
+          majors += rows[i].major += ", ";
+        }
+        majors = majors.substring(0, majors.length - 2);
+        sql = "SELECT * FROM plan join take on plan.planid = take.planid WHERE plan.planid = ";
+        sql += req.query.planid;
+        sql += " ORDER BY year asc, CASE WHEN term = 'Spring' THEN 1 WHEN term = 'Summer' THEN 2 WHEN term = 'Fall' THEN 3 END";
+        db.query(sql, function(err, rows) {
+      
+          if(err){
+            console.log("SELECT from plan join take failed");
+            console.log(err);
+            return;
+          }
+          courses = '';
+          for (let i =0; i < rows.length; i++) {
+            courses += '"' + rows[i].courseid + '":{';
+            courses += '"id":"' + rows[i].courseid + '",';
+            courses += '"year":"' + rows[i].year + '",';
+            courses += '"term":"' + rows[i].term + '"},';
+          }
+          courses = courses.substring(0, courses.length - 2);
+          sql = "SELECT * FROM catalogcourse join course on catalogcourse.courseid = course.courseid";
+          db.query(sql, function(err, rows) {
+        
+            if(err){
+              console.log("SELECT from plan join take failed");
+              console.log(err);
+              return;
+            }
+            catalog = '';
+            for (let i =0; i < rows.length; i++) {
+              catalog += '"' + rows[i].courseid + '":{';
+              catalog += '"id":"' + rows[i].courseid + '",';
+              catalog += '"name":"' + rows[i].title + '",';
+              catalog += '"description":"' + rows[i].description + '",';
+              catalog += '"credits":' + rows[i].credits + '},';
+            }
+            catalog = catalog.substring(0, catalog.length - 2);
+            res.render('getCombined', {user: user, planname: plan_name, majors: majors, courses: courses, catalog: catalog});
+          });
+        });
+      });
     });
   });
 });
+
+/* GET requirements */
+router.get('/getRequirements', function(req, res, next) {
+  var sql = "SELECT * FROM plan join planmajor on plan.planid = planmajor.planid WHERE plan.planid = ";
+  sql += req.query.planid;
+  db.query(sql, (err, rows) => {
+  
+    if(err){
+      console.log("SELECT from plan join planmajor failed");
+      console.log(err);
+      return;
+    }
+    for (let i =0; i < rows.length; i++) {
+      majors += rows[i].major += ", ";
+    }
+
+    res.render('getRequirements', {notes: rows});
+  }); 
+});
+
 
 /* GET notes. */
 // get notes at http://localhost:3000/getNotes?id=3
@@ -46,7 +122,6 @@ router.get('/getNotes', function(req, res, next) {
       console.log(err);
       return;
     }
-    //Render index.pug page using array
     res.render('getNotes', {notes: rows});
   }); 
 });
@@ -62,10 +137,10 @@ router.get('/getPlanIds', function(req, res, next) {
       console.log(err);
       return;
     }
-    //Render index.pug page using array
     res.render('getPlanIds', {plans: rows});
   }); 
 });
+
 
 module.exports = router;
 
