@@ -471,6 +471,19 @@ option {
   width: 80%;
 }
 
+.plan_button {
+  background-color: rgb(124, 197, 208);
+  color: black;
+  border-radius: 10px;
+  border: 1px black solid;
+  text-align: center;
+
+}
+
+.plan_button:hover {
+  background-color: rgb(0, 177, 204);
+}
+
 #close {
   color: #aaa;
   float: right;
@@ -478,8 +491,8 @@ option {
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+#close:hover,
+#close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
