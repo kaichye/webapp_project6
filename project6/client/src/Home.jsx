@@ -1,40 +1,21 @@
-import { useState } from 'react'
-//import './App.css'
+// Login.jsx
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from "react-router-dom";
-import { Login } from "./Login";
-import { Home } from "./Home";
 
+  export function Home() {
 
+    useEffect(() => {
+      const script = document.createElement('script');
   
-function App() {
+      script.src = "javascripts/main.js";
+      script.defer = true;
+  
+      document.body.appendChild(script);
+  
+      // return () => {
+      //   document.body.removeChild(script);
+      // }
+    }, []);
 
-    return (
-        <Router>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/Home" element={<Home />} />
-          </Routes>
-        </Router>
-      );
-
-
-
-/*
-  useEffect(() => {
-    const script = document.createElement('script');
-
-    script.src = "javascripts/main.js";
-    script.defer = true;
-
-    document.body.appendChild(script);
-
-    // return () => {
-    //   document.body.removeChild(script);
-    // }
-  }, []);
-
-  if (false) {
   return (
     <>
       <header>
@@ -116,17 +97,7 @@ function App() {
           </div>
       </div>
     </>
-  )}
-  else {
-    return (
-        <Router>
-            <Routes>
-                <Route path="*" element={<Login />} />
-            </Routes>
-        </Router>
-    );
-  }
-  */
-}
+  )
+};
 
-export default App
+  export default Home;
