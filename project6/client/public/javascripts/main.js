@@ -553,6 +553,7 @@ try {
         courses_planned = courses_planned.filter(e => e !== course_designator);
     
         updateRequirements();
+        updateTotalHours(); //new
 
         // save plan
         year = semester.innerHTML.split(" ")[1];
@@ -630,6 +631,7 @@ try {
         })
         section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
+        updateTotalHours(); //new
     })
     
     
@@ -836,6 +838,7 @@ try {
         (event.target).appendChild(dragged);
 
         updateRequirements(course_designator);
+        updateTotalHours(); //new
 
         let semester = dragged.parentNode.getElementsByClassName("semester")[0];
 
@@ -915,6 +918,22 @@ try {
 
         location.reload();
     });
+
+    updateTotalHours();//new
+    function updateTotalHours(){
+        let totalHours = document.getElementsByClassName("total_hours")[0];
+        let hoursSum = 0;
+        let semesters = section2.querySelectorAll(".cell");
+
+        semesters.forEach(function(semester){
+            let semester_hours = semester.firstChild.getElementsByClassName("credit-hours")[0].innerHTML;
+            semester_hours = semester_hours.split(":")[1];
+            hoursSum += parseInt(semester_hours);
+        });
+        totalHours.innerHTML = "Total Hours: " + hoursSum.toString();
+        
+
+    }
 
 } catch (error) {
 
