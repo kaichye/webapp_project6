@@ -216,6 +216,38 @@ router.get('/getPlanIds', function(req, res, next) {
   }); 
 });
 
+/*
+router.get('/getUser', function(req, res, next) {
+  var sql = "SELECT * from user where userid = ";
+  sql += req.query.user;
+  db.query(sql, (err, rows) => {
+  
+    if(err){
+      console.log("SELECT from user failed");
+      console.log(err);
+      return;
+    }
+    console.log(user);
+    res.render('getUser', {users: rows});
+  }); 
+});*/
+
+router.get('/getUser', function(req, res, next) {
+  var sql = "SELECT * from user where username = '";
+  sql += req.query.id;
+  sql +="'"
+  db.query(sql, (err, rows) => {
+  
+    if(err){
+      console.log("SELECT from plan failed");
+      console.log(err);
+      return;
+    }
+    res.render('getUser', {plans: rows});
+  }); 
+});
+
+
 
 module.exports = router;
 
