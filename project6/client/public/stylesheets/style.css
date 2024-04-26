@@ -497,3 +497,11 @@ option {
   text-decoration: none;
   cursor: pointer;
 }
+
+.students{
+  color: black;
+  text-decoration: none;
+  justify-content: space-evenly;
+  font-size: 16pt;
+
+}

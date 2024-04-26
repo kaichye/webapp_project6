@@ -614,9 +614,6 @@ try {
             let semester = course.parentNode.getElementsByClassName("semester")[0];
             // Remove deleted course from met courses array
             courses_planned = courses_planned.filter(e => e !== course_designator);
-            
-            console.log(course_designator);
-            console.log(courses_planned);
 
             //it's changing the colors, but the courses_planned
             //now has undefined. Is this just updating when you

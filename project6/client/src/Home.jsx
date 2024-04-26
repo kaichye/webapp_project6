@@ -47,7 +47,7 @@ import React, { useEffect } from 'react';
           <div id="gpa" className="banner-element">
               <p>GPA: 3.75</p>
               <p>Major GPA: 3.64</p>
-              <p id="total_hours"></p>
+              <p className="total_hours"></p>
           </div>
       </div>
       <div id="grid-container">
