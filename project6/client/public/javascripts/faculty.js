@@ -22,11 +22,13 @@ try {
         //document.cookie = cookiestring;
         //cookiestring = "studentid=" + key;
         //document.cookie = cookiestring;
-        user.onClick= function(){
+        user.addEventListener("click", function(){
             cookiestring = "studentid=" + key;
             document.cookie = cookiestring;
-        }
-        user.setAttribute('href', 'http://localhost:5173/Home');
+            console.log(cookiestring);
+            location.assign('http://localhost:5173/Home');
+        });
+        //user.setAttribute('href', 'http://localhost:5173/Home');
         user.innerHTML = result[key];
         let page = document.getElementsByTagName("body")[0];
         var br = document.createElement("br");
