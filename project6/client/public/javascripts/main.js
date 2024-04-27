@@ -30,7 +30,14 @@ try {
 
     //these need to be dynamic when we reimplement logins
     // FIXME TODO these need to be dynamic when we reimplement logins
-    faculty = false;
+    roleId = parseInt(readCookie("roleid")) 
+    if (roleId == 3) {
+        faculty = false;
+    }
+    else {
+        faculty = true;
+    }
+
 
     userId = parseInt(readCookie("userid"));
     if (!faculty) {

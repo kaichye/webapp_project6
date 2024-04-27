@@ -11,7 +11,7 @@ function readCookie(name) {
     }
   }
 
-  
+
 if (readCookie("userid") != null) {
     location.assign('http://localhost:5173/Home');
 }
@@ -21,9 +21,6 @@ login_btn = document.getElementById("submit");
 login_btn.onclick = function() {
     user = document.getElementById("user").value;
     pass = document.getElementById("pass").value;
-    
-    console.log(user)
-    console.log(pass)
   
     userid = "";
 
@@ -32,18 +29,28 @@ login_btn.onclick = function() {
         type: 'GET',
         url: 'http://localhost:3000/getUser?id=' + user,
         success: function(data){
-            console.log(parseInt(data));
-            userid = parseInt(data);
+            data = data.replace(/&quot;/g, '"');
+            data = data.replace(/\n/g, '');
+            data = JSON.parse(data);
+            userid = data.userid;
+            roleid = data.roleid;
         }
     });
 
     cookiestring = "userid=" + userid;
+    document.cookie = cookiestring;
 
+    cookiestring = "roleid=" + roleid;
     document.cookie = cookiestring;
 
     console.log(document.cookie);
 
 
-    location.assign('http://localhost:5173/Home');
+    if (parseInt(roleid) == 3) {
+        location.assign('http://localhost:5173/Home');
+    }
+    else {
+        location.assign('http://localhost:5173/Faculty');
+    }
 
 }
