@@ -1,3 +1,21 @@
+function readCookie(name) {
+    try {
+        const content = `; ${document.cookie}`;
+        const cookies = content.split(`; ${name}=`);
+        if (cookies.length === 2){
+            return cookies.pop().split(';').shift();
+        }
+    }
+    catch {
+        return null;
+    }
+  }
+
+  
+if (readCookie("userid") != null) {
+    location.assign('http://localhost:5173/Home');
+}
+
 login_btn = document.getElementById("submit");
 
 login_btn.onclick = function() {

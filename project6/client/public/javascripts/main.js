@@ -6,12 +6,21 @@ try {
     }
 
     function readCookie(name) {
-        const content = `; ${document.cookie}`;
-        const cookies = content.split(`; ${name}=`);
-        if (cookies.length === 2) return cookies.pop().split(';').shift();
+        try {
+            const content = `; ${document.cookie}`;
+            const cookies = content.split(`; ${name}=`);
+            if (cookies.length === 2){
+                return cookies.pop().split(';').shift();
+            }
+        }
+        catch {
+            return null;
+        }
       }
 
-    console.log(document.cookie)
+    if (readCookie("userid") == null) {
+        location.assign('http://localhost:5173/');
+    }
 
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("plans");
@@ -106,7 +115,9 @@ try {
         button.id = plan_ids[i];
         button.classList.add("plan_button");
         button.onclick = function() {
-            localStorage.setItem("planId", button.id);
+            // localStorage.setItem("planId", button.id);
+            cookiestring = "planid=" + button.id;
+            document.cookie = cookiestring; 
             location.reload();
         }
         modal_content.appendChild(button);
@@ -124,11 +135,14 @@ try {
     // let student_plan = {};
 
     // FIXME TODO dynamic
-    if (localStorage.getItem("planId") == null){
+    //if (localStorage.getItem("planId") == null){
+    if(readCookie("planid") == null) {
         planId = plan_ids[0];
+        cookiestring = "planid=" + planId;
+        document.cookie = cookiestring; 
     }
     else {
-        planId = localStorage.getItem("planId");
+        planId = readCookie("planid");
     }
     userId = 2;
 
@@ -945,7 +959,13 @@ try {
 } catch (error) {
 
 }
+var logout = document.getElementById("logout");
 
+logout.onclick = function() {
+    document.cookie = 'userid=; Max-Age=0'
+    document.cookie = 'planid=; Max-Age=0'
+    location.assign('http://localhost:5173/');
+}
 
 // FIXME TODO
 // add in moving between terms

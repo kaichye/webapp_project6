@@ -26,7 +26,6 @@ export const Login = () => {
         </label>
       <input id="submit" type="button" value="Submit" />
       </form>
-      <Link to="/Home">TEST LINK TO HOME PAGE</Link>
     </div>
 
   )
