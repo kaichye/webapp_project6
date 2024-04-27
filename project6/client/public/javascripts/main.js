@@ -788,6 +788,19 @@ try {
         }
     }
 
+    function readCookie(name) {
+        try {
+            const content = `; ${document.cookie}`;
+            const cookies = content.split(`; ${name}=`);
+            if (cookies.length === 2){
+                return cookies.pop().split(';').shift();
+            }
+        }
+        catch {
+            return null;
+        }
+      }
+
     let save = document.getElementById("save");
     save.addEventListener('click', function(event){
         dat = '{"planid": "' + localStorage.getItem("planId") + '", ';
@@ -816,7 +829,6 @@ try {
             dat = dat.substring(0, dat.length - 2);
         }
         dat += ']}';
-        console.log(dat);
 
         $.ajax({
             async: false,
@@ -828,7 +840,41 @@ try {
             success: function(data){}
         });
 
-        location.reload();
+        dat = '{"student": {"id": "';
+        if (readCookie("studentid") != null) {
+            dat += readCookie("studentid");
+        } else {
+            dat += readCookie("userid");
+        }
+        dat += '", "note": "';
+        dat += document.getElementById("s_notes").value;
+        if (readCookie("studentid") != null) {
+            dat += '"}, "faculty": {"id": "';
+            dat += readCookie("userid");
+            dat += '", "note": "';
+            if (typeof document.getElementById("fac_notes").value !== 'undefined') {
+                dat += document.getElementById("fac_notes").value;
+            }
+        }
+        dat += '"}}';
+
+console.log(dat);
+
+        $.ajax({
+            async: false,
+            type: 'POST',
+            url: 'http://localhost:3000/saveNotes',
+            data: dat,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function(data){}
+        });
+
+        del = [];
+        add = [];
+        startTerm = "";
+        startYear = "";
+        startCourse = "";
     });
 
     updateTotalHours();//new
