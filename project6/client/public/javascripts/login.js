@@ -22,7 +22,9 @@ login_btn.onclick = function() {
     user = document.getElementById("user").value;
     pass = document.getElementById("pass").value;
   
-    userid = "";
+    let userid = "";
+    let roleid = "";
+    let fetched_data = null;
 
     $.ajax({
         async: false,
@@ -30,27 +32,35 @@ login_btn.onclick = function() {
         url: 'http://localhost:3000/getUser?id=' + user,
         success: function(data){
             data = data.replace(/&quot;/g, '"');
-            data = data.replace(/\n/g, '');
-            data = JSON.parse(data);
-            userid = data.userid;
-            roleid = data.roleid;
+            fetched_data = data.replace(/\n/g, '');
         }
     });
 
-    cookiestring = "userid=" + userid;
-    document.cookie = cookiestring;
+    try {
+        fetched_data = JSON.parse(fetched_data);
+        userid = fetched_data.userid;
+        roleid = fetched_data.roleid;
 
-    cookiestring = "roleid=" + roleid;
-    document.cookie = cookiestring;
+        cookiestring = "userid=" + userid;
+        document.cookie = cookiestring;
 
-    console.log(document.cookie);
+        cookiestring = "roleid=" + roleid;
+        document.cookie = cookiestring;
+
+        console.log(document.cookie);
 
 
-    if (parseInt(roleid) == 3) {
-        location.assign('http://localhost:5173/Home');
+        if (parseInt(roleid) == 3) {
+            location.assign('http://localhost:5173/Home');
+        }
+        else {
+            location.assign('http://localhost:5173/Faculty');
+        }
     }
-    else {
-        location.assign('http://localhost:5173/Faculty');
+    catch {
+        user_field = document.getElementById("pass");
+        user_field.style.color = "red";
+
     }
 
 }
