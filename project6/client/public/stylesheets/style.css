@@ -9,6 +9,11 @@ body {
   grid-template-columns: 34% 30% 36%;
 }
 
+#go-home {
+  text-decoration: none;
+  color: black;
+}
+
 #notes {
   display: none;
   padding: 20px 10px;

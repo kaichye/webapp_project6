@@ -20,7 +20,7 @@ import React, { useEffect } from 'react';
     <>
       <header>
         <div className="heading">
-            <h1>ACADEMIC PLANNING</h1>
+            <a id="go-home" href="../"><h1>ACADEMIC PLANNING</h1></a>
             <div id="info">
                 <p id="student"></p>
                 <p id="major"></p>

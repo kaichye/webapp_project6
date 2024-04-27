@@ -12,8 +12,10 @@ function readCookie(name) {
   }
 
 
-if (readCookie("userid") != null) {
+if (readCookie("roleid") == 3) {
     location.assign('http://localhost:5173/Home');
+} else if (readCookie("roleid") == 2) {
+    location.assign('http://localhost:5173/Faculty');
 }
 
 login_btn = document.getElementById("submit");
