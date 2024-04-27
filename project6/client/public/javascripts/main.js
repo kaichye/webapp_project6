@@ -5,6 +5,14 @@ try {
         let student_plan = {};
     }
 
+    function readCookie(name) {
+        const content = `; ${document.cookie}`;
+        const cookies = content.split(`; ${name}=`);
+        if (cookies.length === 2) return cookies.pop().split(';').shift();
+      }
+
+    console.log(document.cookie)
+
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("plans");
     var span = document.getElementById("close");
@@ -15,8 +23,10 @@ try {
     // FIXME TODO these need to be dynamic when we reimplement logins
     faculty = false;
 
-    userId = 3;
-    studentId = 1;
+    userId = parseInt(readCookie("userid"));
+    if (!faculty) {
+        studentId = parseInt(readCookie("userid"));
+    }
 
     // notes code
     var notes_btn = document.getElementById("open-notes");

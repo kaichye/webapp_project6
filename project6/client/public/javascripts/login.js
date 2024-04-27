@@ -26,6 +26,6 @@ login_btn.onclick = function() {
     console.log(document.cookie);
 
 
-    //location.assign('http://localhost:5173/Home');
+    location.assign('http://localhost:5173/Home');
 
 }
