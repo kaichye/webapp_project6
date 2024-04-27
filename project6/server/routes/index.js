@@ -182,6 +182,106 @@ router.post('/savePlan', function(req, res, next) {
   res.end(JSON.stringify({ success: true }));
 });
 
+router.post('/saveNotes', function(req, res, next) {
+  stuId = req.body.student.id;
+  stuNote = req.body.student.note;
+  facId = req.body.faculty.id;
+  facNote = req.body.faculty.note;
+
+  var sql = "SELECT note FROM note WHERE ownerId = ";
+  sql += '"' + stuId + '"';
+  
+  db.query(sql, (err, rows) => {
+    if(err){
+      console.log("failed");
+      console.log(err);
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ sucess: false }));
+      return;
+    }
+
+    if (typeof rows[0] === 'undefined') {
+      var sql = "INSERT INTO note VALUES (";
+      sql += '"' + stuId + '", ';
+      sql += '"' + stuId + '", ';
+      sql += '"' + stuNote + '"';
+      sql += ")";
+      db.query(sql, (err, rows) => {
+        if(err){
+          console.log("failed");
+          console.log(err);
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ sucess: false }));
+          return;
+        }
+      });
+    } else {
+      var sql = "UPDATE note SET note = ";
+      sql += '"' + stuNote + '" WHERE ownerId = ';
+      sql += '"' + stuId + '"';
+      db.query(sql, (err, rows) => {
+        if(err){
+          console.log("failed");
+          console.log(err);
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ sucess: false }));
+          return;
+        }
+      });
+    }
+  });
+
+
+  var sql = "SELECT note FROM note WHERE ownerId = ";
+  sql += '"' + facId + '" AND studentId = ';
+  sql += '"' + stuId + '"';
+  
+  db.query(sql, (err, rows) => {
+    if(err){
+      console.log("failed");
+      console.log(err);
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ sucess: false }));
+      return;
+    }
+
+    if (typeof rows[0] === 'undefined') {
+      var sql = "INSERT INTO note VALUES (";
+      sql += '"' + stuId + '", ';
+      sql += '"' + facId + '", ';
+      sql += '"' + facNote + '"';
+      sql += ")";
+      db.query(sql, (err, rows) => {
+        if(err){
+          console.log("failed");
+          console.log(err);
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ sucess: false }));
+          return;
+        }
+      });
+    } else {
+      var sql = "UPDATE note SET note = ";
+      sql += '"' + facNote + '" WHERE ownerId = ';
+      sql += '"' + facId + '" AND studentId = ';
+      sql += '"' + stuId + '"';
+      db.query(sql, (err, rows) => {
+        if(err){
+          console.log("failed");
+          console.log(err);
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ sucess: false }));
+          return;
+        }
+      });
+    }
+  });
+
+
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify({ success: true }));
+});
+
 
 /* GET notes. */
 // get notes at http://localhost:3000/getNotes?id=3
