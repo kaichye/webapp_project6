@@ -46,6 +46,7 @@ try {
     else { //new
         studentId = parseInt(readCookie("studentid"));
     }
+    console.log(studentId);
 
     // notes code
     var notes_btn = document.getElementById("open-notes");
@@ -154,13 +155,12 @@ try {
     else {
         planId = readCookie("planid");
     }
-    userId = 2;
 
     $.ajax({
         async: false,
         type: 'GET',
         //url: 'javascripts/getCombined.txt',
-        url: 'http://localhost:3000/getCombined?planid=' + planId + '&userid=' + userId,
+        url: 'http://localhost:3000/getCombined?planid=' + planId + '&userid=' + studentId,
         success: function(data){
             data = data.replace(/&quot;/g, '"');
             data = data.replace(/&amp;/g, '&');
@@ -972,8 +972,10 @@ try {
 var logout = document.getElementById("logout");
 
 logout.onclick = function() {
-    document.cookie = 'userid=; Max-Age=0'
-    document.cookie = 'planid=; Max-Age=0'
+    document.cookie = 'userid=; Max-Age=0';
+    document.cookie = 'planid=; Max-Age=0';
+    document.cookie = 'roleid=; Max-Age=0';
+    document.cookie = 'studentid=; Max-Age=0';
     location.assign('http://localhost:5173/');
 }
 
