@@ -247,6 +247,31 @@ router.get('/getUser', function(req, res, next) {
   }); 
 });
 
+router.get('/getStudents', function(req, res, next) {
+  var sql = "SELECT * from user where roleid=3";
+
+  db.query(sql, (err, rows) => {
+  
+    if(err){
+      console.log("SELECT from user failed");
+      console.log(err);
+      return;
+    }
+    
+    
+    let users = "{";
+    for(let i = 0; i < rows.length; i++){
+      users += '"' + rows[i].userid + '": "' + rows[i].name + '", ';  
+    }
+
+    users = users.substring(0, users.length - 2);
+    users += "}";
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(users);
+  }); 
+
+});
 
 
 module.exports = router;
