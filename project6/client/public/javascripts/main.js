@@ -355,20 +355,6 @@ try {
             plan_reqs=JSON.parse(data)
         }
     });
-    
-    // plan_reqs = {};
-    // plan_reqs.categories = {};
-    // reqs = reqs.categories;
-    // console.log(reqs);
-    // for (c in reqs) {
-    //     course = reqs[c]
-    //     if (!plan_reqs.categories.hasOwnProperty(course.type)) {
-    //         plan_reqs.categories[course.type] = {}
-    //         plan_reqs.categories[course.type].courses = [];
-    //     }
-    //     plan_reqs.categories[course.type].courses.push(course.id);
-    //     console.log(plan_reqs);
-    // }
 
     let req_categories = plan_reqs.categories;
 
@@ -453,112 +439,7 @@ try {
         cell.addEventListener('drop', drop);
 
     });
-    /*
-    cells.forEach(function(cell) {
-    
-        cell.addEventListener('dragover', function(event){
-            if($(event.target).hasClass("droptarget")){
-                event.preventDefault();
-            }
-            
-        });
-    
-        cell.addEventListener('drop', function(event){      
-    
-            course_designator = "";
-    
-            if ($(dragged).hasClass('req') || $(dragged).hasClass('table_class')) {
-    
-                if ($(dragged).hasClass('req')) {
-                    dragged.classList.remove("req");
-                }
-    
-                if ($(dragged).hasClass('req_course')) {
-                    dragged.classList.remove("req_course");
-                }
-    
-                if ($(dragged).hasClass('met-requirement')) {
-                    dragged.classList.remove("met-requirement");
-                }
-    
-                let innerHTML = dragged.innerText;
-                innerHTML = innerHTML.split(":");
-    
-                course_designator = innerHTML[0];
-                course_name = innerHTML[1];
-    
-                listing = document.createElement("div");
-                listing.classList.add("course");
-    
-                listing_designator = document.createElement("p");
-    
-                listing_designator.classList.add("designator");
-                textNode = document.createTextNode(course_designator);
-                listing_designator.appendChild(textNode);
-    
-                listing_name = document.createElement("p");
-                listing_name.classList.add("name");
-                textNode = document.createTextNode(course_name);
-                listing_name.appendChild(textNode);
-    
-                listing.appendChild(listing_designator);
-                listing.appendChild(listing_name);
-    
-                listing.setAttribute('draggable', true);
-                dragged = listing;
-    
-                dragged.addEventListener('dragstart', function (event) {
-                    dragged = event.target;
-                })
-            }
-            else {
-                let semester_credit_line = dragged.parentNode.getElementsByClassName("credit-hours")[0];
-                semester_credit_line = semester_credit_line.innerHTML.split(": ");
-                let semester_hours = parseInt(semester_credit_line[1]);
-    
-                let newTitle = dragged.parentNode.firstChild.getElementsByClassName("credit-hours")[0];
-    
-                let newCourseDesignator = dragged.getElementsByClassName("designator")[0].innerHTML;
-                let newHours = catalog_courses[newCourseDesignator].credits;
-                semester_hours -= newHours;
-    
-                newTitle.innerHTML = "Hours: " + semester_hours;
-    
-            }
-            
-            let semester_credit_line = event.target.getElementsByClassName("credit-hours")[0];
-            semester_credit_line = semester_credit_line.innerHTML.split(": ");
-            let semester_hours = parseInt(semester_credit_line[1]);
-           
-            let newTitle = event.target.firstChild.getElementsByClassName("credit-hours")[0];
-            
-            let newCourseDesignator = dragged.getElementsByClassName("designator")[0].innerHTML;
-            let newHours = catalog_courses[newCourseDesignator].credits;
-            semester_hours += newHours;
-            
-            newTitle.innerHTML = "Hours: " + semester_hours;
-    
-            if ($(event.target).hasClass('active-cell')){
-                dragged.classList.add("active-course");
-                dragged.firstChild.classList.add("active-designator");
-                dragged.firstChild.classList.remove("history-designator");
-    
-                course_designator = dragged.getElementsByTagName("p")[0].textContent;
-            }
-            else {
-                dragged.classList.remove("active-course");
-                dragged.firstChild.classList.add("history-designator");
-                dragged.firstChild.classList.remove("active-designator");
-    
-                course_designator = dragged.getElementsByTagName("p")[0].textContent;
-            }
-            (event.target).appendChild(dragged);
-    
-            updateRequirements(course_designator);
-            
-        });
-    });
-    */
+
     const deleteCourse = document.getElementById("delete-course");
     deleteCourse.addEventListener('dragover', function(event){
         event.preventDefault();
@@ -978,6 +859,3 @@ logout.onclick = function() {
     document.cookie = 'studentid=; Max-Age=0';
     location.assign('http://localhost:5173/');
 }
-
-// FIXME TODO
-// add in moving between terms
