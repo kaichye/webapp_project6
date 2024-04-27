@@ -43,6 +43,9 @@ try {
     if (!faculty) {
         studentId = parseInt(readCookie("userid"));
     }
+    else { //new
+        studentId = parseInt(readCookie("studentid"));
+    }
 
     // notes code
     var notes_btn = document.getElementById("open-notes");
@@ -56,7 +59,7 @@ try {
         url: 'http://localhost:3000/getNotes?id=' + studentId + '&oid=' + studentId,
         success: function(data){
             data = data.split("<td>")[1];
-            data = data.split("</td>")[0];
+            data = data.split("</td>")[0]; //new
             student_note = data;
         }
     });

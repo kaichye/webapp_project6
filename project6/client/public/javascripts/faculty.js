@@ -18,8 +18,14 @@ try {
         console.log(key);
         user = document.createElement("a");
         user.classList.add("students");
-        cookiestring = "userid=" + key;
-        document.cookie = cookiestring;
+        //cookiestring = "userid=" + key;
+        //document.cookie = cookiestring;
+        //cookiestring = "studentid=" + key;
+        //document.cookie = cookiestring;
+        user.onClick= function(){
+            cookiestring = "studentid=" + key;
+            document.cookie = cookiestring;
+        }
         user.setAttribute('href', 'http://localhost:5173/Home');
         user.innerHTML = result[key];
         let page = document.getElementsByTagName("body")[0];
