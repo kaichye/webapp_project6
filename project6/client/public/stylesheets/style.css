@@ -499,3 +499,7 @@ option {
   font-size: 16pt;
 
 }
+
+a:hover {
+  cursor:pointer;
+}
