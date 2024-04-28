@@ -41,7 +41,7 @@ try {
     if (!faculty) {
         studentId = parseInt(readCookie("userid"));
     }
-    else { //new
+    else {
         studentId = parseInt(readCookie("studentid"));
     }
     console.log(studentId);
@@ -58,7 +58,7 @@ try {
         url: 'http://localhost:3000/getNotes?id=' + studentId + '&oid=' + studentId,
         success: function(data){
             data = data.split("<td>")[1];
-            data = data.split("</td>")[0]; //new
+            data = data.split("</td>")[0]; 
             student_note = data;
         }
     });
@@ -124,7 +124,6 @@ try {
         button.id = plan_ids[i];
         button.classList.add("plan_button");
         button.onclick = function() {
-            // localStorage.setItem("planId", button.id);
             cookiestring = "planid=" + button.id;
             document.cookie = cookiestring; 
             location.reload();
@@ -157,7 +156,6 @@ try {
     $.ajax({
         async: false,
         type: 'GET',
-        //url: 'javascripts/getCombined.txt',
         url: 'http://localhost:3000/getCombined?planid=' + planId + '&userid=' + studentId,
         success: function(data){
             data = data.replace(/&quot;/g, '"');
@@ -345,7 +343,6 @@ try {
     $.ajax({
         async: false,
         type: 'GET',
-        //url: 'javascripts/getRequirements.txt',
         url: 'http://localhost:3000/getRequirements?planid=' + planId,
         success: function (data) {
             data = data.replace(/&quot;/g, '"');
@@ -382,7 +379,7 @@ try {
             courseTextNode = document.createTextNode(course + ": " + catalog_courses[course].name);
             course_id.appendChild(courseTextNode);
 
-            course_id.setAttribute("draggable", true); // new 
+            course_id.setAttribute("draggable", true); 
             cat_div.append(course_id);
         });
 
@@ -424,7 +421,6 @@ try {
     
     const cells = document.querySelectorAll(".cell");
     
-    //new, simplified
     cells.forEach(function(cell) {
 
         cell.addEventListener('dragover', function(event){
@@ -528,10 +524,6 @@ try {
             // Remove deleted course from met courses array
             courses_planned = courses_planned.filter(e => e !== course_designator);
 
-            //it's changing the colors, but the courses_planned
-            //now has undefined. Is this just updating when you
-            //add it to the plan? and all it does when you 
-            //delete is flip the colors?
             updateRequirements();
 
             // save plan
@@ -541,7 +533,7 @@ try {
         })
         section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
-        updateTotalHours(); //new
+        updateTotalHours();
     })
     
     
@@ -568,7 +560,7 @@ try {
         });
     }
 
-    //new for add year
+    //add year
     let add_button = document.getElementById("add-year");
     add_button.addEventListener('click', function(event){
         let fallCell = document.createElement("div");
@@ -662,7 +654,6 @@ try {
         });
     });
 
-    //new, simplified
     function drop(event){
         let addition = false;
         if ($(dragged).hasClass('req_course') || $(dragged).hasClass('table_class')){
