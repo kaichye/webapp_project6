@@ -40,7 +40,7 @@ login_btn.onclick = function() {
         success: function(data){
             console.log(data);
 
-            if(data.success){
+            if(data.sucess){
                 let userid = "";
                 let roleid = "";
                 let fetched_data = null;

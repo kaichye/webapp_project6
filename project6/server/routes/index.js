@@ -1,4 +1,6 @@
 var express = require('express');
+const bcrypt = require("bcrypt")
+const saltRounds = 10
 var db = require('../db/database.js');
 var router = express.Router();
 router.use((req, res, next) => {
@@ -9,6 +11,15 @@ router.use((req, res, next) => {
 });
 
 router.use(express.static('public'));
+
+/*
+function checkPass(pass, hash) {
+  bcrypt.compare(pass, hash)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => console.error(err.message))        
+}*/
 
 /* GET combined */
 router.get('/getCombined', function(req, res, next) {
@@ -362,8 +373,10 @@ router.post('/Login', function(req, res, next) {
   pass = req.body.pass;
 
   var sql = "SELECT * FROM user WHERE username = ";
-  sql += '"' + user + '" AND password = ';
-  sql += '"' + pass + '"';
+  //sql += '"' + user + '" AND password = ';
+  //sql += '"' + pass + '"';a
+  sql += '"' + user + '"';
+
   
   db.query(sql, (err, rows) => {
     if(err){
@@ -379,9 +392,22 @@ router.post('/Login', function(req, res, next) {
       res.end(JSON.stringify({ sucess: false }));
     }
     else {
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({ success: true }));
-    }
+      password = rows[0].password;
+
+    bcrypt.compare(pass, password)
+      .then(valid => {
+        console.log(valid)
+        if (valid) {
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ sucess: true }));
+        }
+        else {
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ sucess: false }));
+        }
+      })
+      .catch(err => console.error(err.message));
+    } 
   });
 });
 
