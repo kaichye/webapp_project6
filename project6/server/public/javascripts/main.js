@@ -1,6 +1,5 @@
 try {
 
-    // FIXME TODO these need to be dynamic when we reimplement logins
     faculty = true;
 
     userId = 3;
@@ -84,14 +83,12 @@ try {
         let student_plan = {};
     }
 
-    // FIXME TODO dynamic
     planId = 3;
     userId = 2;
 
     $.ajax({
         async: false,
         type: 'GET',
-        //url: 'javascripts/getCombined.txt',
         url: 'http://localhost:3000/getCombined?planid=' + planId + '&userid=' + userId,
         success: function(data){
             student_plan=JSON.parse(data);
@@ -269,26 +266,11 @@ try {
         async: false,
         type: 'GET',
         url: 'javascripts/getRequirements.txt',
-        //url: 'https://localhost:7271/Planmajors/GetRequirements/1',
         success: function (data) {
             plan_reqs=JSON.parse(data)
         }
     });
     
-    // plan_reqs = {};
-    // plan_reqs.categories = {};
-    // reqs = reqs.categories;
-    // console.log(reqs);
-    // for (c in reqs) {
-    //     course = reqs[c]
-    //     if (!plan_reqs.categories.hasOwnProperty(course.type)) {
-    //         plan_reqs.categories[course.type] = {}
-    //         plan_reqs.categories[course.type].courses = [];
-    //     }
-    //     plan_reqs.categories[course.type].courses.push(course.id);
-    //     console.log(plan_reqs);
-    // }
-
     let req_categories = plan_reqs.categories;
 
     for (let category in req_categories){

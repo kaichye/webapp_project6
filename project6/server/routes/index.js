@@ -12,15 +12,6 @@ router.use((req, res, next) => {
 
 router.use(express.static('public'));
 
-/*
-function checkPass(pass, hash) {
-  bcrypt.compare(pass, hash)
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => console.error(err.message))        
-}*/
-
 /* GET combined */
 router.get('/getCombined', function(req, res, next) {
   var sql = "SELECT * FROM plan WHERE planid = ";
@@ -373,8 +364,6 @@ router.post('/Login', function(req, res, next) {
   pass = req.body.pass;
 
   var sql = "SELECT * FROM user WHERE username = ";
-  //sql += '"' + user + '" AND password = ';
-  //sql += '"' + pass + '"';a
   sql += '"' + user + '"';
 
   
