@@ -1,4 +1,3 @@
-// Login.jsx
 import React, { useEffect } from 'react';
 
   export function Home() {
@@ -11,9 +10,6 @@ import React, { useEffect } from 'react';
   
       document.body.appendChild(script);
   
-      // return () => {
-      //   document.body.removeChild(script);
-      // }
     }, []);
 
   return (

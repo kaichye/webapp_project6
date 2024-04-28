@@ -16,8 +16,8 @@ export const Faculty = () => {
 
     return (
         <div>
-        <h1>Faculty</h1>
-        <h2>Student-List:</h2>
+          <h1>Faculty</h1>
+          <h2>Student-List:</h2>
         </div>
   )
 };

@@ -151,7 +151,6 @@ button:hover {
   margin: 2px 2px 2px 2px;
 }
 
-/**CHANGED*/
 #section4 {
   background-color: green;
   background-color: rgba(0, 0, 0, 0.6);
@@ -160,12 +159,6 @@ button:hover {
   margin: 2px 2px 2px 2px;
   overflow: auto;
 
-  /**
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  */
 }
 
 .category {
@@ -329,14 +322,12 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.62);
 }
 
-/* new */
 #delete-course {
   background-color: rgba(0, 0, 0, 0);
   height: 40px;
   width: 100px;
 }
 
-/* new */
 #delete-course:hover {
   background-color: rgba(0, 0, 0, 0.62);
 }
@@ -376,7 +367,6 @@ button:hover {
 
   margin-top: 0.3vh;
 
-  /* padding-top: 0.9vh; */
   padding-left: 1vw;
   border-radius: 8px;
   border: 2px black solid;
@@ -390,7 +380,6 @@ button:hover {
 }
 
 .link:hover {
-  /* background-color: rgb(184, 222, 228); */
   background-image: repeating-linear-gradient(
       45deg,
       rgb(184, 222, 228),
