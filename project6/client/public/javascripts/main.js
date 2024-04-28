@@ -7,10 +7,10 @@ try {
 
     function readCookie(name) {
         try {
-            const content = `; ${document.cookie}`;
-            const cookies = content.split(`; ${name}=`);
+            let content = "; " + document.cookie;
+            let cookies = content.split(`; ${name}=`);
             if (cookies.length === 2){
-                return cookies.pop().split(';').shift();
+                return cookies.pop().split(';')[0];
             }
         }
         catch {
@@ -28,8 +28,6 @@ try {
     var modal_content = document.getElementsByClassName("modal-content")[0];
     var plan_form = document.getElementById("plan-form");
 
-    //these need to be dynamic when we reimplement logins
-    // FIXME TODO these need to be dynamic when we reimplement logins
     roleId = parseInt(readCookie("roleid")) 
     if (roleId == 3) {
         faculty = false;

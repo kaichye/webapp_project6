@@ -4,6 +4,7 @@ var router = express.Router();
 router.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
   next();
 });
 
@@ -231,7 +232,6 @@ router.post('/saveNotes', function(req, res, next) {
     }
   });
 
-
   var sql = "SELECT note FROM note WHERE ownerId = ";
   sql += '"' + facId + '" AND studentId = ';
   sql += '"' + stuId + '"';
@@ -316,22 +316,6 @@ router.get('/getPlanIds', function(req, res, next) {
   }); 
 });
 
-/*
-router.get('/getUser', function(req, res, next) {
-  var sql = "SELECT * from user where userid = ";
-  sql += req.query.user;
-  db.query(sql, (err, rows) => {
-  
-    if(err){
-      console.log("SELECT from user failed");
-      console.log(err);
-      return;
-    }
-    console.log(user);
-    res.render('getUser', {users: rows});
-  }); 
-});*/
-
 router.get('/getUser', function(req, res, next) {
   var sql = "SELECT * from user where username = '";
   sql += req.query.id;
@@ -371,6 +355,34 @@ router.get('/getStudents', function(req, res, next) {
     res.end(users);
   }); 
 
+});
+
+router.post('/Login', function(req, res, next) {
+  user = req.body.user;
+  pass = req.body.pass;
+
+  var sql = "SELECT * FROM user WHERE username = ";
+  sql += '"' + user + '" AND password = ';
+  sql += '"' + pass + '"';
+  
+  db.query(sql, (err, rows) => {
+    if(err){
+      console.log("failed");
+      console.log(err);
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ sucess: false }));
+      return;
+    }
+
+    if (typeof rows[0] === 'undefined') {
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ sucess: false }));
+    }
+    else {
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ success: true }));
+    }
+  });
 });
 
 
