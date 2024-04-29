@@ -146,23 +146,6 @@ router.post('/savePlan', function(req, res, next) {
   add = req.body.add;
   del = req.body.del;
 
-  for (let i =0; i < add.length; i++) {
-    var sql = "INSERT INTO take values (";
-    sql += '"' + add[i][0] + '", ';
-    sql += '"' + add[i][1] + '", ';
-    sql += '"' + add[i][2] + '", ';
-    sql += '"' + add[i][3] + '"';
-    sql += ")";
-    db.query(sql, (err, rows) => {
-      if(err){
-        console.log("INSERT to take failed");
-        console.log(err);
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify({ sucess: false }));
-        return;
-      }    
-    });
-  }
 
   for (let i =0; i < del.length; i++) {
     var sql = "DELETE FROM take WHERE ";
@@ -181,6 +164,24 @@ router.post('/savePlan', function(req, res, next) {
     });
   }
 
+  for (let i =0; i < add.length; i++) {
+    var sql = "INSERT INTO take values (";
+    sql += '"' + add[i][0] + '", ';
+    sql += '"' + add[i][1] + '", ';
+    sql += '"' + add[i][2] + '", ';
+    sql += '"' + add[i][3] + '"';
+    sql += ")";
+    db.query(sql, (err, rows) => {
+      if(err){
+        console.log("INSERT to take failed");
+        console.log(err);
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ sucess: false }));
+        return;
+      }    
+    });
+  }
+
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify({ success: true }));
 });
@@ -188,8 +189,10 @@ router.post('/savePlan', function(req, res, next) {
 router.post('/saveNotes', function(req, res, next) {
   stuId = req.body.student.id;
   stuNote = req.body.student.note;
-  facId = req.body.faculty.id;
-  facNote = req.body.faculty.note;
+  if (req.body.faculty != null) {
+    facId = req.body.faculty.id;
+    facNote = req.body.faculty.note;
+  }
 
   var sql = "SELECT note FROM note WHERE ownerId = ";
   sql += '"' + stuId + '"';
@@ -234,50 +237,52 @@ router.post('/saveNotes', function(req, res, next) {
     }
   });
 
-  var sql = "SELECT note FROM note WHERE ownerId = ";
-  sql += '"' + facId + '" AND studentId = ';
-  sql += '"' + stuId + '"';
-  
-  db.query(sql, (err, rows) => {
-    if(err){
-      console.log("failed");
-      console.log(err);
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({ sucess: false }));
-      return;
-    }
+  if (req.body.faculty != null) {
+    var sql = "SELECT note FROM note WHERE ownerId = ";
+    sql += '"' + facId + '" AND studentId = ';
+    sql += '"' + stuId + '"';
+    
+    db.query(sql, (err, rows) => {
+      if(err){
+        console.log("failed");
+        console.log(err);
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ sucess: false }));
+        return;
+      }
 
-    if (typeof rows[0] === 'undefined') {
-      var sql = "INSERT INTO note VALUES (";
-      sql += '"' + stuId + '", ';
-      sql += '"' + facId + '", ';
-      sql += '"' + facNote + '"';
-      sql += ")";
-      db.query(sql, (err, rows) => {
-        if(err){
-          console.log("failed");
-          console.log(err);
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ sucess: false }));
-          return;
-        }
-      });
-    } else {
-      var sql = "UPDATE note SET note = ";
-      sql += '"' + facNote + '" WHERE ownerId = ';
-      sql += '"' + facId + '" AND studentId = ';
-      sql += '"' + stuId + '"';
-      db.query(sql, (err, rows) => {
-        if(err){
-          console.log("failed");
-          console.log(err);
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ sucess: false }));
-          return;
-        }
-      });
-    }
-  });
+      if (typeof rows[0] === 'undefined') {
+        var sql = "INSERT INTO note VALUES (";
+        sql += '"' + stuId + '", ';
+        sql += '"' + facId + '", ';
+        sql += '"' + facNote + '"';
+        sql += ")";
+        db.query(sql, (err, rows) => {
+          if(err){
+            console.log("failed");
+            console.log(err);
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ sucess: false }));
+            return;
+          }
+        });
+      } else {
+        var sql = "UPDATE note SET note = ";
+        sql += '"' + facNote + '" WHERE ownerId = ';
+        sql += '"' + facId + '" AND studentId = ';
+        sql += '"' + stuId + '"';
+        db.query(sql, (err, rows) => {
+          if(err){
+            console.log("failed");
+            console.log(err);
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ sucess: false }));
+            return;
+          }
+        });
+      }
+    });
+  }
 
 
   res.setHeader('Content-Type', 'application/json');

@@ -50,7 +50,9 @@ $.ajax({
     url: 'http://localhost:3000/getNotes?id=' + studentId + '&oid=' + studentId,
     success: function(data){
         data = data.split("<td>")[1];
-        data = data.split("</td>")[0]; 
+        if (data.split("</td>")[0] != null) {
+            data = data.split("</td>")[0];
+        }
         student_note = data;
     }
 });
@@ -454,7 +456,7 @@ deleteCourse.addEventListener('drop', function (event) {
     // save plan
     year = semester.innerHTML.split(" ")[1];
     term = semester.innerHTML.split(" ")[0];
-    planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "del");
+    planSaveTracker(readCookie("planid"), year, term, course_designator, "del");
 })
 
 let delete_year = document.getElementById("delete-year");
@@ -473,7 +475,7 @@ delete_year.addEventListener('click', function(event){
         // save plan
         year = semester.innerHTML.split(" ")[1];
         term = semester.innerHTML.split(" ")[0];
-        planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "del");
+        planSaveTracker(readCookie("planid"), year, term, course_designator, "del");
     })
     section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
@@ -492,7 +494,7 @@ delete_year.addEventListener('click', function(event){
         // save plan
         year = semester.innerHTML.split(" ")[1];
         term = semester.innerHTML.split(" ")[0];
-        planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "del");
+        planSaveTracker(readCookie("planid"), year, term, course_designator, "del");
     })
     section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
@@ -510,7 +512,7 @@ delete_year.addEventListener('click', function(event){
         // save plan
         year = semester.innerHTML.split(" ")[1];
         term = semester.innerHTML.split(" ")[0];
-        planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "del");
+        planSaveTracker(readCookie("planid"), year, term, course_designator, "del");
     })
     section2.lastElementChild.previousElementSibling.previousElementSibling.remove();
 
@@ -727,9 +729,9 @@ function drop(event){
     // save plan
     year = semester.innerHTML.split(" ")[1];
     term = semester.innerHTML.split(" ")[0];
-    planSaveTracker(localStorage.getItem("planId"), year, term, course_designator, "add");
+    planSaveTracker(readCookie("planid"), year, term, course_designator, "add");
     if (startCourse == course_designator) {
-        planSaveTracker(localStorage.getItem("planId"), startYear, startTerm, startCourse, "del");
+        planSaveTracker(readCookie("planid"), startYear, startTerm, startCourse, "del");
         
         startYear = "";
         startTerm = "";
@@ -771,7 +773,7 @@ function readCookie(name) {
 
 let save = document.getElementById("save");
 save.addEventListener('click', function(event){
-    dat = '{"planid": "' + localStorage.getItem("planId") + '", ';
+    dat = '{"planid": "' + readCookie("planid") + '", ';
     dat += '"add": [';
     for (let i = 0; i < add.length; i++) {
         dat += '[';
@@ -820,8 +822,8 @@ save.addEventListener('click', function(event){
         dat += '"}, "faculty": {"id": "';
         dat += readCookie("userid");
         dat += '", "note": "';
-        if (typeof document.getElementById("fac_notes").value !== 'undefined') {
-            dat += document.getElementById("fac_notes").value;
+        if (typeof document.getElementById("f_notes").value !== 'undefined') {
+            dat += document.getElementById("f_notes").value;
         }
     }
     dat += '"}}';
