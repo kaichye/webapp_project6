@@ -11,3 +11,6 @@ The DB connection has only worked for us on the VPN
 
 ### Browser
 Visit `http://localhost:5173` to get to the login page.
+
+### Packages
+The web app utilizes the react-router-dom and bcrypt packages.
