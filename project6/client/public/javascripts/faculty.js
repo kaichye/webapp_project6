@@ -16,14 +16,14 @@ try {
     for(var key in result){
         console.log(result[key]);
         console.log(key);
-        user = document.createElement("a");
+        let user = document.createElement("a");
         user.classList.add("students");
         user.addEventListener("click", function(){
-            cookiestring = "studentid=" + key;
+            cookiestring = "studentid=" + getKeyByValue(result, user.innerHTML); 
             document.cookie = cookiestring;
-            console.log(cookiestring);
             location.assign('http://localhost:5173/Home');
         });
+
         user.innerHTML = result[key];
         let page = document.getElementsByTagName("body")[0];
         var br = document.createElement("br");
@@ -34,3 +34,11 @@ try {
 } catch (error) {
 }
 
+function getKeyByValue(object, value) {
+    for (let prop in object) {
+        if (object.hasOwnProperty(prop)) {
+            if (object[prop] === value)
+                return prop;
+        }
+    }
+}

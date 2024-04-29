@@ -140,10 +140,6 @@ try {
         modal.style.display = "none";
     }
 
-    // let student_plan = {};
-
-    // FIXME TODO dynamic
-    //if (localStorage.getItem("planId") == null){
     if(readCookie("planid") == null) {
         planId = plan_ids[0];
         cookiestring = "planid=" + planId;
@@ -337,7 +333,6 @@ try {
     // Accordion
     let plan_reqs = {};
     
-    //FIXME TODO dynamic
     planId = 3;
 
     $.ajax({
@@ -866,7 +861,7 @@ console.log(dat);
         startCourse = "";
     });
 
-    updateTotalHours();//new
+    updateTotalHours();
     function updateTotalHours(){
         let totalHours = document.getElementsByClassName("total_hours")[0];
         let hoursSum = 0;
