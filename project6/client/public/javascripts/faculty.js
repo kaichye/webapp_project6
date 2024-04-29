@@ -17,6 +17,7 @@ for(var key in result){
     user.addEventListener("click", function(){
         cookiestring = "studentid=" + getKeyByValue(result, user.innerHTML); 
         document.cookie = cookiestring;
+        document.cookie = 'planid=; Max-Age=0';
         location.assign('http://localhost:5173/Home');
     });
 
