@@ -38,8 +38,6 @@ login_btn.onclick = function() {
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         success: function(data){
-            console.log(data);
-
             if(data.sucess){
                 let userid = "";
                 let roleid = "";
@@ -64,9 +62,6 @@ login_btn.onclick = function() {
 
                 cookiestring = "roleid=" + roleid;
                 document.cookie = cookiestring;
-
-                console.log(document.cookie);
-
 
                 if (parseInt(roleid) == 3) {
                     location.assign('http://localhost:5173/Home');

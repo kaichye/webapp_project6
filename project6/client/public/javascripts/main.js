@@ -37,7 +37,6 @@ if (!faculty) {
 else {
     studentId = parseInt(readCookie("studentid"));
 }
-console.log(studentId);
 
 // notes code
 var notes_btn = document.getElementById("open-notes");
@@ -469,9 +468,6 @@ delete_year.addEventListener('click', function(event){
         // Remove deleted course from met courses array
         courses_planned = courses_planned.filter(e => e !== course_designator);
 
-        console.log(course_designator); 
-        console.log(courses_planned);
-
         updateRequirements();
 
         // save plan
@@ -490,9 +486,6 @@ delete_year.addEventListener('click', function(event){
         
         // Remove deleted course from met courses array
         courses_planned = courses_planned.filter(e => e !== course_designator);
-        
-        console.log(course_designator);
-        console.log(courses_planned);
 
         updateRequirements();
 
@@ -753,7 +746,6 @@ function planSaveTracker(planid, year, term, course_designator, action) {
         temp.push('"' + term + '", ');
         temp.push('"' + course_designator + '"');
         del.push(temp);
-        console.log(del);
     } else if (action == "add") {
         temp = []
         temp.push('"' + planid + '", ');
@@ -761,7 +753,6 @@ function planSaveTracker(planid, year, term, course_designator, action) {
         temp.push('"' + term + '", ');
         temp.push('"' + course_designator + '"');
         add.push(temp);
-        console.log(add);
     }
 }
 
@@ -834,8 +825,6 @@ save.addEventListener('click', function(event){
         }
     }
     dat += '"}}';
-
-console.log(dat);
 
     $.ajax({
         async: false,

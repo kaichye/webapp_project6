@@ -10,8 +10,6 @@ $.ajax({
 
 let user;
 for(var key in result){
-    console.log(result[key]);
-    console.log(key);
     let user = document.createElement("a");
     user.classList.add("students");
     user.addEventListener("click", function(){
