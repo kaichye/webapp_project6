@@ -3,6 +3,7 @@ Inside the `project6` folder there are two folders: `client` for React and `serv
 
 ### Server Folder
 `$ npm start`
+The DB connection has only worked for us on the VPN
 
 ### Client Folder
 `$ npm run dev`
